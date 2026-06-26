@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  @keyframes confettiFall{0%{transform:translateY(0) rotate(0)}8%{opacity:1}100%{transform:translateY(1100px) rotate(680deg);opacity:0}}
+  @keyframes coinSettle{0%{transform:translate(0,0) scale(.2);opacity:0}12%{opacity:1}42%{transform:translate(var(--tx),var(--ty)) scale(1.1);opacity:1}100%{transform:translate(0,0) scale(.45);opacity:0}}
+  @keyframes fadeUp{0%{transform:translateY(16px)}100%{transform:translateY(0)}}
+  @keyframes popIn{0%{transform:scale(.7)}70%{transform:scale(1.07)}100%{transform:scale(1)}}
+  @keyframes ripple{0%{transform:scale(.7);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes glowBlue{0%,100%{box-shadow:0 10px 26px rgba(46,143,255,.26)}50%{box-shadow:0 16px 40px rgba(46,143,255,.5),0 0 28px rgba(46,143,255,.34)}}
+  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .scrl::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+<div style="position:relative;width:412px;height:896px;border-radius:40px;overflow:hidden;background:#0F1A2D;border:1px solid rgba(255,255,255,.06);box-shadow:0 36px 80px rgba(0,0,0,.5);font-family:'Manrope',sans-serif;color:#F2F6FC;">
+  <div style="position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:460px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(46,143,255,.18),transparent 65%);filter:blur(14px);z-index:1;"></div>
+  <div style="position:absolute;inset:0;z-index:40;pointer-events:none;">
+    <sc-for list="{{ confetti }}" as="c" hint-placeholder-count="46">
+      <div style="position:absolute;top:-24px;left:{{ c.left }}%;width:{{ c.size }}px;height:{{ c.h }}px;background:{{ c.color }};border-radius:{{ c.radius }}px;opacity:0;animation:confettiFall {{ c.dur }}s ease-in {{ c.delay }}s forwards;"></div>
+    </sc-for>
+  </div>
+
+  <div class="scrl" style="position:absolute;inset:0;z-index:20;overflow-y:auto;scrollbar-width:none;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:600;">
+      <span style="font-family:'Sora',sans-serif;">9:41</span>
+      <div style="display:flex;align-items:center;gap:7px;opacity:.9;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div>
+    </div>
+
+    <div style="padding:8px 24px 30px;">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="position:relative;width:96px;height:96px;margin-top:14px;animation:popIn .6s cubic-bezier(.2,.9,.3,1.4) .1s both;">
+          <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(46,143,255,.45);animation:ripple 2.2s ease-out infinite;"></div>
+          <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(46,143,255,.3);animation:ripple 2.2s ease-out .7s infinite;"></div>
+          <div style="position:absolute;inset:0;border-radius:50%;background:#14254A;border:3px solid #2E8FFF;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 26px rgba(46,143,255,.4);"><span style="font-family:'Material Symbols Rounded';font-size:48px;color:#2E8FFF;font-variation-settings:'FILL' 1;">check</span></div>
+          <div style="position:absolute;inset:0;z-index:5;pointer-events:none;">
+            <sc-for list="{{ coins }}" as="k" hint-placeholder-count="12">
+              <div style="position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px;border-radius:50%;background:#2E8FFF;box-shadow:0 0 8px rgba(46,143,255,.6);--tx:{{ k.tx }};--ty:{{ k.ty }};animation:coinSettle 1.7s cubic-bezier(.2,.7,.3,1) {{ k.delay }}s forwards;"></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="margin-top:16px;font-size:11px;font-weight:700;letter-spacing:2.4px;color:#66B0FF;animation:fadeUp .6s ease .15s both;">SURVEY COMPLETED</div>
+        <h1 style="margin:8px 0 0;font-family:'Sora',sans-serif;font-size:25px;font-weight:800;letter-spacing:-.4px;animation:fadeUp .6s ease .2s both;">Nice work, that paid off 🎉</h1>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-top:14px;animation:fadeUp .6s ease .28s both;">
+          <span style="font-family:'Sora',sans-serif;font-size:26px;font-weight:600;color:#2E8FFF;">+₹</span>
+          <span style="font-family:'Sora',sans-serif;font-size:58px;font-weight:800;letter-spacing:-2px;line-height:.9;">48</span>
+        </div>
+        <span style="font-size:12.5px;color:rgba(224,233,247,.55);margin-top:6px;">added to your MoneyHi wallet</span>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:16px;margin-top:24px;padding:18px;border-radius:22px;background:#1B2840;border:1px solid rgba(255,255,255,.08);box-shadow:0 8px 22px rgba(0,0,0,.28);animation:fadeUp .6s ease .34s both;">
+        <div style="position:relative;width:74px;height:74px;flex:none;">
+          <svg width="74" height="74" viewBox="0 0 120 120" style="transform:rotate(-90deg);"><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"></circle><circle ref="{{ ringC }}" cx="60" cy="60" r="52" fill="none" stroke="#2E8FFF" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle></svg>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:#2E8FFF;">5</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:baseline;gap:7px;"><span ref="{{ xpC }}" style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">0</span><span style="font-size:12px;font-weight:700;color:rgba(224,233,247,.5);">XP EARNED</span><span style="margin-left:auto;font-size:11px;font-weight:800;color:#06152B;background:#2E8FFF;padding:3px 9px;border-radius:20px;">Level 5</span></div>
+          <div style="margin-top:10px;height:8px;border-radius:20px;background:rgba(255,255,255,.08);overflow:hidden;"><div ref="{{ barC }}" style="height:100%;width:0;border-radius:20px;background:#2E8FFF;"></div></div>
+          <div style="margin-top:7px;font-size:11.5px;color:rgba(224,233,247,.5);">540 XP to <span style="color:#66B0FF;font-weight:600;">Level 6</span></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:14px;animation:fadeUp .6s ease .4s both;">
+        <div style="flex:1;display:flex;align-items:center;gap:10px;padding:14px;border-radius:18px;background:#1B2840;border:1px solid rgba(255,255,255,.08);"><span style="width:36px;height:36px;flex:none;border-radius:11px;background:rgba(46,143,255,.14);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#2E8FFF;font-variation-settings:'FILL' 1;">local_fire_department</span></span><div><div style="font-family:'Sora',sans-serif;font-size:15px;font-weight:800;">Day 4</div><div style="font-size:10.5px;color:rgba(224,233,247,.5);">streak kept</div></div></div>
+        <div style="flex:1;display:flex;align-items:center;gap:10px;padding:14px;border-radius:18px;background:#1B2840;border:1px solid rgba(255,255,255,.08);"><span style="width:36px;height:36px;flex:none;border-radius:11px;background:rgba(46,143,255,.14);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#2E8FFF;font-variation-settings:'FILL' 1;">military_tech</span></span><div><div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;">New badge</div><div style="font-size:10.5px;color:rgba(224,233,247,.5);">Survey Starter</div></div></div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:14px;animation:fadeUp .6s ease .46s both;">
+        <div style="flex:1;padding:16px;border-radius:18px;background:#14254A;border:1px solid rgba(46,143,255,.3);"><div style="font-size:10.5px;font-weight:700;letter-spacing:.8px;color:rgba(224,233,247,.55);">TODAY</div><div ref="{{ todayC }}" style="font-family:'Sora',sans-serif;font-size:24px;font-weight:800;margin-top:5px;">₹100</div></div>
+        <div style="flex:1;padding:16px;border-radius:18px;background:#1B2840;border:1px solid rgba(255,255,255,.08);"><div style="font-size:10.5px;font-weight:700;letter-spacing:.8px;color:rgba(224,233,247,.55);">THIS WEEK</div><div style="font-family:'Sora',sans-serif;font-size:24px;font-weight:800;margin-top:5px;">₹420</div></div>
+      </div>
+
+      <div style="margin-top:14px;padding:18px;border-radius:20px;background:#1B2840;border:1px solid rgba(255,255,255,.08);animation:fadeUp .6s ease .52s both;">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;">Next cashout</span><span style="font-size:12px;font-weight:800;color:#66B0FF;">Only ₹18 to go</span></div>
+        <div style="margin-top:12px;height:10px;border-radius:20px;background:rgba(255,255,255,.08);overflow:hidden;"><div ref="{{ momC }}" style="height:100%;width:0;border-radius:20px;background:#2E8FFF;box-shadow:0 0 12px rgba(46,143,255,.5);"></div></div>
+        <div style="margin-top:8px;font-size:11.5px;color:rgba(224,233,247,.5);">₹82 / ₹100 — one more survey unlocks it</div>
+      </div>
+
+      <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;animation:fadeUp .6s ease .56s both;">Keep the momentum</div>
+      <div style="margin-top:12px;padding:16px;border-radius:20px;background:#14254A;border:1px solid rgba(46,143,255,.3);animation:fadeUp .6s ease .6s both;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:46px;height:46px;flex:none;border-radius:13px;background:#0F1A2D;border:1px solid rgba(46,143,255,.4);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:13px;color:#66B0FF;">SV</div>
+          <div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:6px;"><span style="font-size:10px;font-weight:800;letter-spacing:.5px;color:#06152B;background:#66B0FF;padding:2px 7px;border-radius:20px;">95% MATCH</span></div><div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;margin-top:5px;">Another perfect match</div><div style="font-size:11px;color:rgba(224,233,247,.55);margin-top:2px;">SurveyVault · ~3 min · 95% qualify chance</div></div>
+          <span style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:#2E8FFF;flex:none;">₹52</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:13px 16px;border-radius:16px;background:#1B2840;border:1px dashed rgba(46,143,255,.35);animation:fadeUp .6s ease .64s both;">
+        <span style="font-family:'Material Symbols Rounded';font-size:22px;color:#66B0FF;animation:floatY 2.4s ease-in-out infinite;">casino</span>
+        <div style="flex:1;"><div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;">Lucky spin unlocked</div><div style="font-size:11px;color:rgba(224,233,247,.5);">Win up to ₹100 — free after this survey</div></div>
+        <span style="font-family:'Material Symbols Rounded';font-size:20px;color:rgba(224,233,247,.4);">chevron_right</span>
+      </div>
+
+      <button style="margin-top:22px;width:100%;height:58px;border:none;border-radius:16px;background:#2E8FFF;color:#06152B;font-family:'Sora',sans-serif;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;animation:fadeUp .6s ease .68s both,glowBlue 3s ease-in-out 1.4s infinite;">Earn ₹52 again · 3 min <span style="font-family:'Material Symbols Rounded';font-size:20px;">arrow_forward</span></button>
+      <button style="margin-top:11px;width:100%;height:50px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:transparent;color:#F2F6FC;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">Back to home</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:412,&quot;height&quot;:896}}">
+class Component extends DCLogic {
+  ringC = React.createRef(); xpC = React.createRef(); barC = React.createRef(); momC = React.createRef(); todayC = React.createRef();
+
+  confetti = Array.from({length:46}, (_,i)=>{
+    const cols=['#2E8FFF','#66B0FF','#9CC9FF','#F2F6FC','#1E6FE0'];
+    return { left:+(Math.random()*100).toFixed(1), size:5+Math.round(Math.random()*5), h:8+Math.round(Math.random()*7),
+      color:cols[i%cols.length], radius:Math.random()>.5?6:1, dur:+(2.8+Math.random()*2).toFixed(2), delay:+(Math.random()*1.8).toFixed(2) };
+  });
+  coins = Array.from({length:12}, (_,i)=>{
+    const a=(i/12)*Math.PI*2, r=56+Math.random()*32;
+    return { tx:Math.round(Math.cos(a)*r)+'px', ty:Math.round(Math.sin(a)*r-12)+'px', delay:+(Math.random()*.3).toFixed(2) };
+  });
+
+  renderVals(){ return { confetti:this.confetti, coins:this.coins, ringC:this.ringC, xpC:this.xpC, barC:this.barC, momC:this.momC, todayC:this.todayC }; }
+
+  componentDidMount(){
+    const circ=326.7, fmt=n=>Math.round(n).toLocaleString('en-IN');
+    const ease=t=>1-Math.pow(1-t,3), dur=1500, begin=400, t0=performance.now();
+    this._a=setInterval(()=>{
+      const t=Math.min(1,Math.max(0,(performance.now()-t0-begin)/dur)), e=ease(t);
+      if(this.ringC.current) this.ringC.current.style.strokeDashoffset=(circ-circ*0.73*e).toFixed(1);
+      if(this.barC.current) this.barC.current.style.width=(73*e).toFixed(2)+'%';
+      if(this.momC.current) this.momC.current.style.width=(82*e).toFixed(2)+'%';
+      if(this.xpC.current) this.xpC.current.textContent='+'+fmt(80*e);
+      if(this.todayC.current) this.todayC.current.textContent='₹'+fmt(100+48*e);
+      if(t>=1) clearInterval(this._a);
+    }, 33);
+  }
+  componentWillUnmount(){ clearInterval(this._a); }
+}
+</script>
+</body>
+</html>

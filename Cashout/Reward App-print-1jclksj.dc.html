@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style data-omelette-print-defaults>
+@media print {
+  @page { margin: 0.5in; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  figure, table, pre, blockquote, img, svg, tr, [class~="card" i] { break-inside: avoid; }
+  img, svg { max-width: 100%; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  @keyframes confettiFall{0%{transform:translateY(0) rotate(0)}8%{opacity:1}100%{transform:translateY(1040px) rotate(680deg);opacity:0}}
+  @keyframes coinSettle{0%{transform:translate(0,0) scale(.2);opacity:0}12%{opacity:1}42%{transform:translate(var(--tx),var(--ty)) scale(1.1);opacity:1}100%{transform:translate(0,0) scale(.45);opacity:0}}
+  @keyframes chestPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  @keyframes glowBlue{0%,100%{box-shadow:0 10px 26px rgba(46,143,255,.22)}50%{box-shadow:0 14px 38px rgba(46,143,255,.42),0 0 26px rgba(46,143,255,.3)}}
+  @keyframes fadeUp{0%{transform:translateY(16px)}100%{transform:translateY(0)}}
+  @keyframes slideUp{0%{transform:translateY(24px) scale(.98)}100%{transform:translateY(0) scale(1)}}
+  @keyframes popIn{0%{transform:scale(.7)}70%{transform:scale(1.07)}100%{transform:scale(1)}}
+  @keyframes ripple{0%{transform:scale(.7);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes shimmer{0%{transform:translateX(-130%)}100%{transform:translateX(240%)}}
+  @keyframes floatCTA{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  @keyframes spinLoad{to{transform:rotate(360deg)}}
+  .lbl{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:#7d8a99;letter-spacing:.4px;margin-bottom:14px;cursor:grab}
+</style>
+</helmet>
+
+<div style="position:absolute;left:120px;top:90px;width:412px;">
+  <div data-drags-parent="1" class="lbl">1 · Home Dashboard</div>
+  <div data-screen-label="Home" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;">
+      <span style="font-family:'Sora',sans-serif;">9:41</span>
+      <div style="display:flex;align-items:center;gap:7px;opacity:.92;">
+        <span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span>
+      </div>
+    </div>
+
+    <div style="padding:6px 20px 92px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(46,143,255,.15);border:1px solid rgba(46,143,255,.4);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#5CA8FF;">AR</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;">Hi, Aarav 👋</div>
+          <div style="font-size:12px;color:rgba(244,247,251,.5);">Level 5 · Pro Earner</div>
+        </div>
+        <div style="position:relative;width:42px;height:42px;border-radius:13px;background:#10171C;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Material Symbols Rounded';font-size:22px;color:#F4F7FB;">notifications</span>
+          <span style="position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:#2E8FFF;border:2px solid #10171C;"></span>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;padding:18px;border-radius:20px;background:#0E1822;border:1px solid rgba(46,143,255,.24);">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:rgba(244,247,251,.55);">WALLET BALANCE</span>
+          <span style="font-family:'Material Symbols Rounded';font-size:20px;color:#2E8FFF;">account_balance_wallet</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:12px;">
+          <span style="font-family:'Sora',sans-serif;font-size:38px;font-weight:800;letter-spacing:-1px;line-height:1;">₹1,240</span>
+          <span style="font-size:11px;font-weight:800;color:#03101F;background:#2E8FFF;padding:3px 8px;border-radius:20px;">+₹240 today</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <button style="flex:1;height:44px;border:none;border-radius:13px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;"><span style="font-family:'Material Symbols Rounded';font-size:18px;">arrow_outward</span>Withdraw</button>
+          <button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.12);border-radius:13px;background:transparent;color:#F4F7FB;font-family:'Sora',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">History</button>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;padding:16px 18px;border-radius:18px;background:#10171C;border:1px solid rgba(255,255,255,.06);">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="position:relative;width:72px;height:72px;flex:none;">
+            <svg width="72" height="72" viewBox="0 0 120 120" style="transform:rotate(-90deg);">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="10"></circle>
+              <circle ref="{{ ringHome }}" cx="60" cy="60" r="52" fill="none" stroke="#2E8FFF" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:24px;font-weight:800;color:#2E8FFF;">5</div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;">Progress to next reward</span>
+              <span style="font-size:11px;font-weight:700;color:#2E8FFF;">₹50</span>
+            </div>
+            <div style="margin-top:10px;height:8px;border-radius:20px;background:rgba(255,255,255,.07);overflow:hidden;"><div ref="{{ barHome }}" style="height:100%;width:0;border-radius:20px;background:#2E8FFF;"></div></div>
+            <div style="margin-top:8px;font-size:11.5px;color:rgba(244,247,251,.5);">3,240 / 4,000 XP · <span style="color:#2E8FFF;font-weight:600;">760 to Level 6</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;padding:14px 16px;border-radius:18px;background:#10171C;border:1px solid rgba(255,255,255,.06);">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-family:'Material Symbols Rounded';font-size:19px;color:#2E8FFF;font-variation-settings:'FILL' 1;">local_fire_department</span>
+            <span style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;">4 day streak</span>
+          </div>
+          <span style="font-size:11px;font-weight:700;color:#2E8FFF;">+10 XP daily</span>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:13px;">
+          <sc-for list="{{ streakHome }}" as="d" hint-placeholder-count="7">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;">
+              <div style="width:100%;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:{{ d.bg }};border:1px solid {{ d.border }};"><span style="font-family:'Material Symbols Rounded';font-size:15px;color:{{ d.fg }};font-variation-settings:'FILL' 1;">{{ d.icon }}</span></div>
+              <span style="font-size:9px;font-weight:600;color:{{ d.label }};">{{ d.day }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px;margin-bottom:12px;">
+        <span style="font-family:'Sora',sans-serif;font-size:15px;font-weight:700;">Active missions</span>
+        <span style="font-size:12px;font-weight:600;color:#2E8FFF;">See all</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <sc-for list="{{ homeMissions }}" as="m" hint-placeholder-count="2">
+          <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:16px;background:#10171C;border:1px solid rgba(255,255,255,.06);">
+            <div style="width:40px;height:40px;flex:none;border-radius:12px;background:rgba(46,143,255,.12);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:#2E8FFF;">{{ m.icon }}</span></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:700;">{{ m.title }}</div>
+              <div style="margin-top:7px;height:6px;border-radius:10px;background:rgba(255,255,255,.07);overflow:hidden;"><div style="height:100%;width:{{ m.prog }}%;border-radius:10px;background:#2E8FFF;"></div></div>
+              <div style="margin-top:6px;font-size:10.5px;color:rgba(244,247,251,.45);">{{ m.meta }}</div>
+            </div>
+            <span style="font-size:12px;font-weight:800;color:#2E8FFF;background:rgba(46,143,255,.12);padding:5px 9px;border-radius:20px;flex:none;">{{ m.reward }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px;margin-bottom:12px;">
+        <span style="font-family:'Sora',sans-serif;font-size:15px;font-weight:700;">Recommended offers</span>
+        <span style="font-size:12px;font-weight:600;color:#2E8FFF;">See all</span>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <sc-for list="{{ homeOffers }}" as="o" hint-placeholder-count="2">
+          <div style="flex:1;min-width:0;border-radius:16px;overflow:hidden;background:#10171C;border:1px solid rgba(255,255,255,.06);">
+            <div style="height:74px;background-image:repeating-linear-gradient(45deg,#13202C,#13202C 7px,#0F1A24 7px,#0F1A24 14px);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:28px;color:rgba(92,168,255,.85);">{{ o.icon }}</span></div>
+            <div style="padding:11px 12px 13px;">
+              <span style="font-size:9.5px;font-weight:700;letter-spacing:.5px;color:#5CA8FF;">{{ o.tag }}</span>
+              <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;line-height:1.25;margin-top:5px;min-height:32px;">{{ o.title }}</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:9px;">
+                <span style="font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:#2E8FFF;">{{ o.reward }}</span>
+                <span style="font-size:10px;color:rgba(244,247,251,.45);">{{ o.diff }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px;margin-bottom:12px;">
+        <span style="font-family:'Sora',sans-serif;font-size:15px;font-weight:700;">Recent activity</span>
+        <span style="font-size:12px;font-weight:600;color:#2E8FFF;">See all</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <sc-for list="{{ homeActivity }}" as="a" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 4px;">
+            <div style="width:38px;height:38px;flex:none;border-radius:11px;background:rgba(46,143,255,.1);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#2E8FFF;">{{ a.icon }}</span></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13.5px;font-weight:600;">{{ a.title }}</div>
+              <div style="font-size:11px;color:rgba(244,247,251,.42);margin-top:2px;">{{ a.sub }}</div>
+            </div>
+            <span style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:{{ a.color }};">{{ a.amt }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="position:absolute;right:18px;bottom:90px;display:flex;align-items:center;gap:8px;height:50px;padding:0 18px;border-radius:25px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:14px;box-shadow:0 10px 26px rgba(46,143,255,.45);animation:floatCTA 3s ease-in-out infinite;cursor:pointer;">
+      <span style="font-family:'Material Symbols Rounded';font-size:20px;">bolt</span>Earn more
+    </div>
+
+    <dc-import name="RewardNav" active="home" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:660px;top:90px;width:412px;">
+  <div data-drags-parent="1" class="lbl">2 · Notification Center</div>
+  <div data-screen-label="Notifications" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;">
+      <span style="font-family:'Sora',sans-serif;">9:41</span>
+      <div style="display:flex;align-items:center;gap:7px;opacity:.92;">
+        <span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span>
+      </div>
+    </div>
+    <div style="padding:8px 20px 90px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Notifications</span>
+          <span style="font-size:11px;font-weight:800;color:#03101F;background:#2E8FFF;padding:3px 9px;border-radius:20px;">3 new</span>
+        </div>
+        <span style="font-size:12px;font-weight:600;color:#2E8FFF;">Mark all read</span>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(244,247,251,.4);margin:22px 0 10px;">NEW</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <sc-for list="{{ notifsNew }}" as="n" hint-placeholder-count="3">
+          <div style="display:flex;align-items:flex-start;gap:13px;padding:14px;border-radius:16px;background:#0E1822;border:1px solid rgba(46,143,255,.18);">
+            <div style="width:40px;height:40px;flex:none;border-radius:12px;background:rgba(46,143,255,.14);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:#2E8FFF;font-variation-settings:'FILL' 1;">{{ n.icon }}</span></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:700;">{{ n.title }}</div>
+              <div style="font-size:11.5px;color:rgba(244,247,251,.55);margin-top:3px;line-height:1.35;">{{ n.sub }}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:none;">
+              <span style="font-size:10.5px;color:rgba(244,247,251,.4);">{{ n.time }}</span>
+              <span style="width:8px;height:8px;border-radius:50%;background:#2E8FFF;box-shadow:0 0 8px rgba(46,143,255,.7);"></span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(244,247,251,.4);margin:22px 0 10px;">EARLIER</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <sc-for list="{{ notifsOld }}" as="n" hint-placeholder-count="4">
+          <div style="display:flex;align-items:flex-start;gap:13px;padding:14px;border-radius:16px;background:#0C1116;border:1px solid rgba(255,255,255,.05);opacity:.82;">
+            <div style="width:40px;height:40px;flex:none;border-radius:12px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:rgba(92,168,255,.85);">{{ n.icon }}</span></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:600;color:rgba(244,247,251,.85);">{{ n.title }}</div>
+              <div style="font-size:11.5px;color:rgba(244,247,251,.45);margin-top:3px;line-height:1.35;">{{ n.sub }}</div>
+            </div>
+            <span style="font-size:10.5px;color:rgba(244,247,251,.35);flex:none;">{{ n.time }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="none" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:1200px;top:90px;width:412px;">
+  <div data-drags-parent="1" class="lbl">3 · Post Cash-out Experience</div>
+  <div data-screen-label="Post Cash-out" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;padding-bottom:28px;">
+    <div style="position:absolute;inset:0;z-index:40;pointer-events:none;">
+      <sc-for list="{{ confettiPC }}" as="c" hint-placeholder-count="44">
+        <div style="position:absolute;top:-24px;left:{{ c.left }}%;width:{{ c.size }}px;height:{{ c.h }}px;background:{{ c.color }};border-radius:{{ c.radius }}px;opacity:0;animation:confettiFall {{ c.dur }}s ease-in {{ c.delay }}s forwards;"></div>
+      </sc-for>
+    </div>
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;">
+      <span style="font-family:'Sora',sans-serif;">9:41</span>
+      <div style="display:flex;align-items:center;gap:7px;opacity:.92;">
+        <span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span>
+      </div>
+    </div>
+    <div style="padding:6px 22px 0;position:relative;z-index:20;">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="position:relative;width:82px;height:82px;margin-top:8px;animation:popIn .6s cubic-bezier(.2,.9,.3,1.4) .1s both;">
+          <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(46,143,255,.45);animation:ripple 2.2s ease-out infinite;"></div>
+          <div style="position:absolute;inset:0;border-radius:50%;background:#0E1822;border:3px solid #2E8FFF;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 22px rgba(46,143,255,.35);"><span style="font-family:'Material Symbols Rounded';font-size:40px;color:#2E8FFF;font-variation-settings:'FILL' 1;">check</span></div>
+        </div>
+        <div style="margin-top:14px;font-size:11px;font-weight:700;letter-spacing:2.4px;color:#2E8FFF;animation:fadeUp .6s ease .15s both;">FIRST CASH-OUT COMPLETE</div>
+        <h1 style="margin:9px 0 0;font-family:'Sora',sans-serif;font-size:24px;line-height:1.24;font-weight:700;letter-spacing:-.3px;max-width:300px;text-wrap:balance;animation:fadeUp .6s ease .22s both;">🎉 You just unlocked your first real reward!</h1>
+      </div>
+
+      <div style="margin-top:22px;padding:20px;border-radius:20px;background:#0E1822;border:1px solid rgba(46,143,255,.2);animation:fadeUp .6s ease .3s both;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:rgba(244,247,251,.5);">WITHDRAWAL SUCCESSFUL</span>
+          <div style="display:flex;align-items:center;gap:6px;"><span style="width:19px;height:19px;border-radius:50%;background:#2E8FFF;color:#03101F;display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:13px;">check</span></span><span style="font-size:11px;font-weight:600;color:#2E8FFF;">Paid</span></div>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:3px;margin-top:14px;">
+          <span style="font-family:'Sora',sans-serif;font-size:28px;font-weight:600;color:#2E8FFF;">₹</span>
+          <span style="font-family:'Sora',sans-serif;font-size:50px;font-weight:800;letter-spacing:-1.5px;line-height:.9;">100</span>
+          <span style="margin-left:auto;font-size:13px;font-weight:600;color:rgba(244,247,251,.65);text-align:right;">Successfully<br>Withdrawn</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07);">
+          <span style="font-size:12px;color:rgba(244,247,251,.5);">to UPI &bull;&bull;&bull;&bull; 4821</span>
+          <span style="font-size:12px;color:rgba(244,247,251,.5);">Today, 2:14 PM</span>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;padding:20px;border-radius:20px;background:#10171C;border:1px solid rgba(255,255,255,.06);animation:fadeUp .6s ease .4s both;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#2E8FFF;">lock_open</span><span style="font-family:'Sora',sans-serif;font-size:15px;font-weight:700;">Journey Level 2 Unlocked</span></div>
+        <div style="display:flex;align-items:center;gap:18px;margin-top:16px;">
+          <div style="position:relative;width:104px;height:104px;flex:none;">
+            <svg width="104" height="104" viewBox="0 0 120 120" style="transform:rotate(-90deg);">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="9"></circle>
+              <circle ref="{{ ringPC }}" cx="60" cy="60" r="52" fill="none" stroke="#2E8FFF" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:rgba(244,247,251,.45);">LEVEL</span><span style="font-family:'Sora',sans-serif;font-size:32px;font-weight:800;line-height:1;color:#2E8FFF;">2</span></div>
+            <div style="position:absolute;inset:0;z-index:5;pointer-events:none;">
+              <sc-for list="{{ coinsPC }}" as="k" hint-placeholder-count="10">
+                <div style="position:absolute;left:50%;top:50%;width:15px;height:15px;margin:-7.5px;border-radius:50%;background:#2E8FFF;--tx:{{ k.tx }};--ty:{{ k.ty }};animation:coinSettle 1.7s cubic-bezier(.2,.7,.3,1) {{ k.delay }}s forwards;"></div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:baseline;gap:7px;"><span ref="{{ xpPC }}" style="font-family:'Sora',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.5px;">1,000</span><span style="font-size:13px;font-weight:700;color:rgba(244,247,251,.45);">XP</span><span style="margin-left:auto;font-size:11px;font-weight:800;color:#03101F;background:#2E8FFF;padding:3px 8px;border-radius:20px;">+240 XP</span></div>
+            <div style="margin-top:10px;height:8px;border-radius:20px;background:rgba(255,255,255,.07);overflow:hidden;"><div style="height:100%;width:48%;border-radius:20px;background:#2E8FFF;"></div></div>
+            <div style="margin-top:8px;font-size:11.5px;color:rgba(244,247,251,.45);">260 XP to <span style="color:#2E8FFF;font-weight:600;">Level 3</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding:15px 18px;border-radius:18px;background:#10171C;border:1px solid rgba(46,143,255,.18);animation:fadeUp .6s ease .5s both;">
+        <div style="width:46px;height:46px;flex:none;border-radius:14px;background:rgba(46,143,255,.14);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:26px;color:#2E8FFF;font-variation-settings:'FILL' 1;">emoji_events</span></div>
+        <div style="flex:1;min-width:0;"><div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#2E8FFF;">NEW BADGE EARNED</div><div style="font-family:'Sora',sans-serif;font-size:15px;font-weight:700;margin-top:2px;">First Withdrawal</div></div>
+        <span style="font-family:'Material Symbols Rounded';font-size:22px;color:rgba(244,247,251,.4);">chevron_right</span>
+      </div>
+
+      <div style="margin-top:14px;padding:14px 16px;border-radius:18px;background:#10171C;border:1px solid rgba(255,255,255,.06);animation:fadeUp .6s ease .55s both;">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#2E8FFF;font-variation-settings:'FILL' 1;">local_fire_department</span><span style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;">Daily streak started</span></div><span style="font-size:11px;font-weight:700;color:#2E8FFF;">DAY 1</span></div>
+        <div style="display:flex;gap:6px;margin-top:13px;">
+          <sc-for list="{{ streakPC }}" as="d" hint-placeholder-count="7">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;"><div style="width:100%;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:{{ d.bg }};border:1px solid {{ d.border }};"><span style="font-family:'Material Symbols Rounded';font-size:15px;color:{{ d.fg }};font-variation-settings:'FILL' 1;">{{ d.icon }}</span></div><span style="font-size:9px;font-weight:600;color:{{ d.label }};">{{ d.day }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;padding:18px;border-radius:20px;background:#0E1822;border:1px solid rgba(46,143,255,.24);animation:slideUp .6s cubic-bezier(.2,.8,.25,1) .6s both;">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:800;letter-spacing:2px;color:#2E8FFF;">TOMORROW'S MISSION</span><div style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:rgba(46,143,255,.14);border:1px solid rgba(46,143,255,.3);"><span style="font-family:'Material Symbols Rounded';font-size:13px;color:#2E8FFF;">schedule</span><span ref="{{ cdPC }}" style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:#5CA8FF;">23:59:59</span></div></div>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:16px;">
+          <div style="width:50px;height:46px;flex:none;position:relative;animation:chestPulse 2.2s ease-in-out infinite;">
+            <div style="position:absolute;bottom:0;left:4px;right:4px;height:28px;border-radius:7px;background:#16344f;border:1.5px solid rgba(92,168,255,.45);"></div>
+            <div style="position:absolute;top:6px;left:0;right:0;height:20px;border-radius:9px 9px 4px 4px;background:#2E8FFF;border:1.5px solid rgba(156,201,255,.6);"></div>
+            <div style="position:absolute;top:20px;left:50%;width:10px;height:12px;margin-left:-5px;border-radius:3px;background:#04101F;border:1px solid rgba(156,201,255,.55);z-index:2;"></div>
+          </div>
+          <div style="flex:1;min-width:0;"><div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;line-height:1.3;">Complete 2 offers tomorrow</div><div style="margin-top:6px;font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:#2E8FFF;">Earn +₹50 Bonus</div></div>
+        </div>
+      </div>
+
+      <button style="margin-top:20px;width:100%;height:56px;border:none;border-radius:16px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;animation:glowBlue 3s ease-in-out 1.2s infinite;">Start Tomorrow's Mission <span style="font-family:'Material Symbols Rounded';font-size:20px;">arrow_forward</span></button>
+      <button style="margin-top:11px;width:100%;height:50px;border:1px solid rgba(46,143,255,.35);border-radius:14px;background:transparent;color:#2E8FFF;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;"><span style="font-family:'Material Symbols Rounded';font-size:18px;">bolt</span> Explore High Reward Offers</button>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute;left:1740px;top:90px;width:412px;">
+  <div data-drags-parent="1" class="lbl">4 · Profile</div>
+  <div data-screen-label="Profile" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;">
+      <span style="font-family:'Sora',sans-serif;">9:41</span>
+      <div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div>
+    </div>
+    <div style="padding:8px 20px 90px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Profile</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:24px;color:rgba(244,247,251,.7);">settings</span>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:15px;margin-top:18px;">
+        <div style="position:relative;width:66px;height:66px;border-radius:50%;background:rgba(46,143,255,.15);border:2px solid rgba(46,143,255,.5);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:22px;color:#5CA8FF;">AR<span style="position:absolute;bottom:-2px;right:-2px;width:24px;height:24px;border-radius:50%;background:#2E8FFF;border:2px solid #0A0F14;display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:13px;color:#03101F;font-weight:700;">verified</span></span></div>
+        <div style="flex:1;min-width:0;"><div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;">Aarav Sharma</div><div style="font-size:12.5px;color:rgba(244,247,251,.5);margin-top:2px;">Level 5 · Pro Earner</div></div>
+        <span style="font-size:12px;font-weight:600;color:#2E8FFF;border:1px solid rgba(46,143,255,.35);padding:7px 13px;border-radius:20px;">Edit</span>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <div style="flex:1;padding:14px 12px;border-radius:16px;background:#0E1822;border:1px solid rgba(46,143,255,.2);text-align:center;"><div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;">₹2,340</div><div style="font-size:10px;color:rgba(244,247,251,.5);margin-top:3px;">Total earned</div></div>
+        <div style="flex:1;padding:14px 12px;border-radius:16px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;color:#2E8FFF;">3,240</div><div style="font-size:10px;color:rgba(244,247,251,.5);margin-top:3px;">Total XP</div></div>
+        <div style="flex:1;padding:14px 12px;border-radius:16px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;">5</div><div style="font-size:10px;color:rgba(244,247,251,.5);margin-top:3px;">Level</div></div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px;margin-bottom:12px;"><span style="font-family:'Sora',sans-serif;font-size:15px;font-weight:700;">Achievements</span><span style="font-size:12px;font-weight:600;color:#2E8FFF;">View all</span></div>
+      <div style="display:flex;gap:12px;">
+        <sc-for list="{{ profileBadges }}" as="b" hint-placeholder-count="4">
+          <div style="flex:1;aspect-ratio:1;border-radius:16px;background:{{ b.bg }};border:1px solid {{ b.border }};display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:26px;color:{{ b.fg }};font-variation-settings:'FILL' {{ b.fill }};">{{ b.icon }}</span></div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:20px;padding:16px 18px;border-radius:18px;background:#0E1822;border:1px solid rgba(46,143,255,.2);">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:9px;"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:#2E8FFF;font-variation-settings:'FILL' 1;">diversity_3</span><span style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;">Refer &amp; earn ₹50 each</span></div><span style="font-size:11px;font-weight:700;color:#2E8FFF;">3/10</span></div>
+        <div style="margin-top:12px;height:8px;border-radius:20px;background:rgba(255,255,255,.07);overflow:hidden;"><div style="height:100%;width:30%;border-radius:20px;background:#2E8FFF;"></div></div>
+        <div style="font-size:11px;color:rgba(244,247,251,.5);margin-top:8px;">7 more invites to unlock a ₹200 bonus</div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(244,247,251,.4);margin:22px 0 10px;">PAYMENT METHODS</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <sc-for list="{{ paymentMethods }}" as="p" hint-placeholder-count="2">
+          <div style="display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);"><div style="width:38px;height:38px;flex:none;border-radius:11px;background:rgba(46,143,255,.1);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#2E8FFF;">{{ p.icon }}</span></div><span style="flex:1;font-size:13.5px;font-weight:600;">{{ p.label }}</span><span style="font-size:10px;font-weight:700;color:{{ p.tagColor }};">{{ p.tag }}</span></div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:2px;margin-top:18px;">
+        <sc-for list="{{ settingsRows }}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:13px;padding:13px 4px;"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:{{ s.color }};width:24px;text-align:center;">{{ s.icon }}</span><span style="flex:1;font-size:13.5px;font-weight:600;color:{{ s.color }};">{{ s.label }}</span><span style="font-family:'Material Symbols Rounded';font-size:20px;color:rgba(244,247,251,.3);">chevron_right</span></div>
+        </sc-for>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="profile" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+<div style="position:absolute;left:120px;top:1400px;width:412px;">
+  <div data-drags-parent="1" class="lbl">5 · Achievement Center</div>
+  <div data-screen-label="Achievements" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:8px 20px 90px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Achievements</span><span style="font-size:12px;font-weight:700;color:#2E8FFF;background:rgba(46,143,255,.12);padding:5px 11px;border-radius:20px;">1 / 5</span></div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <div style="flex:1;padding:13px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#2E8FFF;">1</div><div style="font-size:10px;color:rgba(244,247,251,.5);margin-top:2px;">Completed</div></div>
+        <div style="flex:1;padding:13px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;">3</div><div style="font-size:10px;color:rgba(244,247,251,.5);margin-top:2px;">In progress</div></div>
+        <div style="flex:1;padding:13px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:rgba(244,247,251,.4);">1</div><div style="font-size:10px;color:rgba(244,247,251,.5);margin-top:2px;">Locked</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px;margin-top:18px;">
+        <sc-for list="{{ achievements }}" as="a" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:14px;padding:15px;border-radius:18px;background:#10171C;border:1px solid {{ a.cardBorder }};opacity:{{ a.opacity }};">
+            <div style="width:46px;height:46px;flex:none;border-radius:14px;background:{{ a.iconBg }};display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:25px;color:{{ a.iconFg }};font-variation-settings:'FILL' {{ a.iconFill }};">{{ a.icon }}</span></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;">{{ a.title }}</div>
+              <div style="font-size:11px;color:rgba(244,247,251,.45);margin-top:2px;">{{ a.sub }}</div>
+              <sc-if value="{{ a.isProg }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:9px;height:6px;border-radius:10px;background:rgba(255,255,255,.07);overflow:hidden;"><div style="height:100%;width:{{ a.prog }}%;border-radius:10px;background:#2E8FFF;"></div></div>
+              </sc-if>
+            </div>
+            <span style="font-size:10.5px;font-weight:700;color:{{ a.chipColor }};background:{{ a.chipBg }};padding:5px 9px;border-radius:20px;flex:none;text-align:center;max-width:78px;">{{ a.chip }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="rewards" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:660px;top:1400px;width:412px;">
+  <div data-drags-parent="1" class="lbl">6 · Rewards Progress</div>
+  <div data-screen-label="Rewards" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:8px 20px 90px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Rewards roadmap</span><span style="font-size:12px;font-weight:700;color:#2E8FFF;background:rgba(46,143,255,.12);padding:5px 11px;border-radius:20px;">Level 5</span></div>
+      <div style="margin-top:16px;padding:16px 18px;border-radius:18px;background:#0E1822;border:1px solid rgba(46,143,255,.22);">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(244,247,251,.55);">NEXT REWARD</span><span style="font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:#2E8FFF;">₹100 + Badge</span></div>
+        <div style="margin-top:12px;height:8px;border-radius:20px;background:rgba(255,255,255,.07);overflow:hidden;"><div style="height:100%;width:81%;border-radius:20px;background:#2E8FFF;"></div></div>
+        <div style="font-size:11px;color:rgba(244,247,251,.5);margin-top:8px;">760 XP to unlock · Level 6</div>
+      </div>
+      <div style="position:relative;margin-top:20px;padding-left:6px;">
+        <div style="position:absolute;left:23px;top:18px;bottom:18px;width:2px;background:#1a2531;"></div>
+        <div style="display:flex;flex-direction:column;gap:14px;position:relative;">
+          <sc-for list="{{ rewards }}" as="r" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div style="width:36px;height:36px;flex:none;border-radius:50%;background:{{ r.nodeBg }};border:2px solid {{ r.nodeBorder }};display:flex;align-items:center;justify-content:center;z-index:2;"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:{{ r.nodeFg }};font-variation-settings:'FILL' 1;">{{ r.nodeIcon }}</span></div>
+              <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;background:{{ r.cardBg }};border:1px solid {{ r.cardBorder }};">
+                <div><div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:rgba(244,247,251,.4);">{{ r.lvl }}</div><div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:{{ r.rewardColor }};margin-top:2px;">{{ r.reward }}</div></div>
+                <span style="font-size:10px;font-weight:700;color:{{ r.tagColor }};">{{ r.tag }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="rewards" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:1200px;top:1400px;width:412px;">
+  <div data-drags-parent="1" class="lbl">7 · Offer Details</div>
+  <div data-screen-label="Offer Details" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:4px 20px 110px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="width:38px;height:38px;border-radius:12px;background:#10171C;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:21px;">arrow_back</span></div>
+        <div style="width:38px;height:38px;border-radius:12px;background:#10171C;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:20px;">ios_share</span></div>
+      </div>
+      <div style="position:relative;margin-top:14px;height:130px;border-radius:20px;overflow:hidden;background-image:repeating-linear-gradient(45deg,#13202C,#13202C 9px,#0F1A24 9px,#0F1A24 18px);display:flex;align-items:center;justify-content:center;">
+        <span style="font-family:'Material Symbols Rounded';font-size:46px;color:rgba(92,168,255,.85);">account_balance</span>
+        <div style="position:absolute;top:12px;left:12px;font-family:'Sora',sans-serif;font-size:9px;color:rgba(244,247,251,.35);letter-spacing:.5px;">offer_artwork.png</div>
+        <div style="position:absolute;bottom:12px;right:12px;display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:20px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:15px;box-shadow:0 8px 20px rgba(46,143,255,.4);"><span style="font-family:'Material Symbols Rounded';font-size:16px;">payments</span>₹450</div>
+      </div>
+      <div style="margin-top:16px;"><span style="font-size:10px;font-weight:700;letter-spacing:1px;color:#5CA8FF;">FINANCE · TIER 1</span><h2 style="font-family:'Sora',sans-serif;font-size:21px;font-weight:800;margin:6px 0 0;">Open a Demat Account</h2></div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <div style="flex:1;padding:12px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#2E8FFF;">schedule</span><div style="font-size:12px;font-weight:700;margin-top:4px;">~15 min</div><div style="font-size:9.5px;color:rgba(244,247,251,.45);">Est. time</div></div>
+        <div style="flex:1;padding:12px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#2E8FFF;">trending_up</span><div style="font-size:12px;font-weight:700;margin-top:4px;">Medium</div><div style="font-size:9.5px;color:rgba(244,247,251,.45);">Difficulty</div></div>
+        <div style="flex:1;padding:12px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);text-align:center;"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#2E8FFF;">verified_user</span><div style="font-size:12px;font-weight:700;margin-top:4px;">48 hrs</div><div style="font-size:9.5px;color:rgba(244,247,251,.45);">Payout</div></div>
+      </div>
+      <div style="margin-top:18px;padding:15px 17px;border-radius:16px;background:#0E1822;border:1px solid rgba(46,143,255,.2);">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;">Your progress</span><span style="font-size:11px;font-weight:700;color:#2E8FFF;">Step 1 of 3</span></div>
+        <div style="display:flex;gap:6px;margin-top:11px;"><div style="flex:1;height:6px;border-radius:10px;background:#2E8FFF;"></div><div style="flex:1;height:6px;border-radius:10px;background:rgba(255,255,255,.08);"></div><div style="flex:1;height:6px;border-radius:10px;background:rgba(255,255,255,.08);"></div></div>
+      </div>
+      <div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;margin:20px 0 12px;">How it works</div>
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <sc-for list="{{ offerRules }}" as="rule" hint-placeholder-count="4">
+          <div style="display:flex;align-items:flex-start;gap:12px;"><div style="width:24px;height:24px;flex:none;border-radius:8px;background:rgba(46,143,255,.12);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:11px;font-weight:800;color:#2E8FFF;">{{ rule.num }}</div><span style="font-size:12.5px;color:rgba(244,247,251,.7);line-height:1.4;padding-top:3px;">{{ rule.text }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:16px 20px 22px;background:linear-gradient(180deg,rgba(10,15,20,0),#0A0F14 32%);">
+      <button style="width:100%;height:56px;border:none;border-radius:16px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;animation:glowBlue 3s ease-in-out 1s infinite;">Start Offer · Earn ₹450 <span style="font-family:'Material Symbols Rounded';font-size:20px;">arrow_forward</span></button>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute;left:1740px;top:1400px;width:412px;">
+  <div data-drags-parent="1" class="lbl">8 · Wallet</div>
+  <div data-screen-label="Wallet" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:8px 20px 90px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Wallet</span><span style="font-family:'Material Symbols Rounded';font-size:23px;color:rgba(244,247,251,.7);">tune</span></div>
+      <div style="margin-top:16px;padding:20px;border-radius:20px;background:#0E1822;border:1px solid rgba(46,143,255,.24);">
+        <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:rgba(244,247,251,.55);">AVAILABLE BALANCE</span>
+        <div style="font-family:'Sora',sans-serif;font-size:40px;font-weight:800;letter-spacing:-1px;line-height:1;margin-top:10px;">₹1,240</div>
+        <div style="display:flex;gap:22px;margin-top:14px;">
+          <div><div style="font-size:11px;color:rgba(244,247,251,.45);">Pending</div><div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:#5CA8FF;margin-top:2px;">₹35</div></div>
+          <div><div style="font-size:11px;color:rgba(244,247,251,.45);">Lifetime</div><div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;margin-top:2px;">₹2,340</div></div>
+        </div>
+        <button style="width:100%;height:46px;margin-top:16px;border:none;border-radius:13px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;"><span style="font-family:'Material Symbols Rounded';font-size:18px;">arrow_outward</span>Withdraw</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:18px;">
+        <span style="font-size:12px;font-weight:700;color:#03101F;background:#2E8FFF;padding:7px 14px;border-radius:20px;">All</span>
+        <span style="font-size:12px;font-weight:600;color:rgba(244,247,251,.6);background:#10171C;border:1px solid rgba(255,255,255,.06);padding:7px 14px;border-radius:20px;">Earned</span>
+        <span style="font-size:12px;font-weight:600;color:rgba(244,247,251,.6);background:#10171C;border:1px solid rgba(255,255,255,.06);padding:7px 14px;border-radius:20px;">Withdrawn</span>
+        <span style="font-size:12px;font-weight:600;color:rgba(244,247,251,.6);background:#10171C;border:1px solid rgba(255,255,255,.06);padding:7px 14px;border-radius:20px;">Pending</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2px;margin-top:16px;">
+        <sc-for list="{{ walletTxns }}" as="t" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:13px;padding:13px 4px;border-bottom:1px solid rgba(255,255,255,.04);">
+            <div style="width:40px;height:40px;flex:none;border-radius:12px;background:rgba(46,143,255,.1);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#2E8FFF;">{{ t.icon }}</span></div>
+            <div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:600;">{{ t.title }}</div><div style="font-size:11px;color:rgba(244,247,251,.42);margin-top:2px;">{{ t.sub }} · <span style="color:{{ t.statusColor }};">{{ t.statusChip }}</span></div></div>
+            <span style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:{{ t.amtColor }};">{{ t.amt }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="wallet" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+<div style="position:absolute;left:120px;top:2710px;width:412px;">
+  <div data-drags-parent="1" class="lbl">9 · Empty — Notifications</div>
+  <div data-screen-label="Empty Notifications" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:8px 24px 0;height:740px;display:flex;flex-direction:column;">
+      <span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Notifications</span>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <div style="position:relative;width:104px;height:104px;display:flex;align-items:center;justify-content:center;"><div style="position:absolute;inset:0;border-radius:50%;background:rgba(46,143,255,.08);"></div><div style="width:80px;height:80px;border-radius:50%;background:rgba(46,143,255,.12);border:1px solid rgba(46,143,255,.25);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:38px;color:#2E8FFF;">notifications_off</span></div></div>
+        <div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;margin-top:24px;">You're all caught up</div>
+        <div style="font-size:13px;color:rgba(244,247,251,.5);margin-top:8px;line-height:1.5;max-width:240px;">New rewards, missions and streak updates will land right here.</div>
+        <button style="margin-top:24px;height:48px;padding:0 22px;border:none;border-radius:14px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:14px;cursor:pointer;">Explore offers</button>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="none" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:660px;top:2710px;width:412px;">
+  <div data-drags-parent="1" class="lbl">10 · Empty — Withdrawals</div>
+  <div data-screen-label="Empty Withdrawals" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:8px 24px 0;height:740px;display:flex;flex-direction:column;">
+      <span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Wallet</span>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <div style="position:relative;width:104px;height:104px;display:flex;align-items:center;justify-content:center;"><div style="position:absolute;inset:0;border-radius:50%;background:rgba(46,143,255,.08);"></div><div style="width:80px;height:80px;border-radius:50%;background:rgba(46,143,255,.12);border:1px solid rgba(46,143,255,.25);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:38px;color:#2E8FFF;">receipt_long</span></div></div>
+        <div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;margin-top:24px;">No withdrawals yet</div>
+        <div style="font-size:13px;color:rgba(244,247,251,.5);margin-top:8px;line-height:1.5;max-width:250px;">Cash out your earnings and your history will appear here.</div>
+        <button style="margin-top:24px;height:48px;padding:0 22px;border:none;border-radius:14px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px;cursor:pointer;"><span style="font-family:'Material Symbols Rounded';font-size:18px;">arrow_outward</span>Withdraw now</button>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="wallet" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:1200px;top:2710px;width:412px;">
+  <div data-drags-parent="1" class="lbl">11 · Empty — Completed Offers</div>
+  <div data-screen-label="Empty Offers" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:8px 24px 0;height:740px;display:flex;flex-direction:column;">
+      <span style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;">Offers</span>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <div style="position:relative;width:104px;height:104px;display:flex;align-items:center;justify-content:center;"><div style="position:absolute;inset:0;border-radius:50%;background:rgba(46,143,255,.08);"></div><div style="width:80px;height:80px;border-radius:50%;background:rgba(46,143,255,.12);border:1px solid rgba(46,143,255,.25);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:38px;color:#2E8FFF;">task_alt</span></div></div>
+        <div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;margin-top:24px;">No completed offers yet</div>
+        <div style="font-size:13px;color:rgba(244,247,251,.5);margin-top:8px;line-height:1.5;max-width:250px;">Finish your first offer to start stacking real cash rewards.</div>
+        <button style="margin-top:24px;height:48px;padding:0 22px;border:none;border-radius:14px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px;cursor:pointer;"><span style="font-family:'Material Symbols Rounded';font-size:18px;">bolt</span>Browse offers</button>
+      </div>
+    </div>
+    <dc-import name="RewardNav" active="offers" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:1740px;top:2710px;width:412px;">
+  <div data-drags-parent="1" class="lbl">12 · Loading / Skeleton</div>
+  <div data-screen-label="Skeleton" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="padding:10px 20px 90px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="position:relative;overflow:hidden;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out infinite;"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;"><div style="position:relative;overflow:hidden;width:120px;height:13px;border-radius:7px;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out .1s infinite;"></div></div><div style="position:relative;overflow:hidden;width:80px;height:11px;border-radius:7px;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out .15s infinite;"></div></div></div>
+        <div style="width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.05);"></div>
+      </div>
+      <div style="position:relative;overflow:hidden;margin-top:18px;height:130px;border-radius:20px;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out .2s infinite;"></div></div>
+      <div style="position:relative;overflow:hidden;margin-top:14px;height:96px;border-radius:18px;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out .25s infinite;"></div></div>
+      <div style="position:relative;overflow:hidden;margin-top:14px;height:70px;border-radius:18px;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out .3s infinite;"></div></div>
+      <div style="display:flex;gap:12px;margin-top:14px;">
+        <div style="flex:1;position:relative;overflow:hidden;height:150px;border-radius:16px;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out .35s infinite;"></div></div>
+        <div style="flex:1;position:relative;overflow:hidden;height:150px;border-radius:16px;background:rgba(255,255,255,.05);"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-130%);animation:shimmer 1.6s ease-in-out .4s infinite;"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:26px;color:rgba(244,247,251,.45);font-size:12px;"><span style="display:inline-block;width:15px;height:15px;border:2px solid rgba(46,143,255,.3);border-top-color:#2E8FFF;border-radius:50%;animation:spinLoad .8s linear infinite;"></span>Loading your dashboard…</div>
+    </div>
+    <dc-import name="RewardNav" active="home" hint-size="412px,72px"></dc-import>
+  </div>
+</div>
+
+<div style="position:absolute;left:120px;top:4020px;width:412px;">
+  <div data-drags-parent="1" class="lbl">13 · Error — Network</div>
+  <div data-screen-label="Error Network" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">signal_cellular_off</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi_off</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="height:790px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 32px;">
+      <div style="position:relative;width:108px;height:108px;display:flex;align-items:center;justify-content:center;"><div style="position:absolute;inset:0;border-radius:50%;background:rgba(255,107,91,.08);"></div><div style="width:82px;height:82px;border-radius:50%;background:rgba(255,107,91,.12);border:1px solid rgba(255,107,91,.3);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:40px;color:#FF6B5B;">wifi_off</span></div></div>
+      <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;margin-top:24px;">No internet connection</div>
+      <div style="font-size:13px;color:rgba(244,247,251,.5);margin-top:8px;line-height:1.5;max-width:260px;">We couldn't reach the server. Check your connection and try again.</div>
+      <button style="margin-top:26px;width:200px;height:50px;border:none;border-radius:14px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;"><span style="font-family:'Material Symbols Rounded';font-size:19px;">refresh</span>Try again</button>
+      <span style="margin-top:14px;font-size:13px;font-weight:600;color:rgba(244,247,251,.55);">Go to offline mode</span>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute;left:660px;top:4020px;width:412px;">
+  <div data-drags-parent="1" class="lbl">14 · Error — Payment Failed</div>
+  <div data-screen-label="Error Payment" style="position:relative;width:412px;border-radius:40px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;">
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;"><span style="font-family:'Sora',sans-serif;">9:41</span><div style="display:flex;align-items:center;gap:7px;opacity:.92;"><span style="font-family:'Material Symbols Rounded';font-size:16px;">network_cell</span><span style="font-family:'Material Symbols Rounded';font-size:16px;">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:18px;">battery_full</span></div></div>
+    <div style="height:790px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 30px;">
+      <div style="position:relative;width:108px;height:108px;display:flex;align-items:center;justify-content:center;"><div style="position:absolute;inset:0;border-radius:50%;background:rgba(255,107,91,.08);"></div><div style="width:82px;height:82px;border-radius:50%;background:rgba(255,107,91,.12);border:1px solid rgba(255,107,91,.3);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Material Symbols Rounded';font-size:42px;color:#FF6B5B;">error</span></div></div>
+      <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;margin-top:24px;">Withdrawal failed</div>
+      <div style="font-size:13px;color:rgba(244,247,251,.5);margin-top:8px;line-height:1.5;max-width:265px;">Your ₹100 withdrawal couldn't be processed. No money has left your wallet.</div>
+      <div style="margin-top:20px;width:100%;padding:14px 16px;border-radius:14px;background:#10171C;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:11px;text-align:left;"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#5CA8FF;">info</span><span style="font-size:12px;color:rgba(244,247,251,.6);line-height:1.4;">UPI gateway timed out. This usually resolves within a few minutes.</span></div>
+      <button style="margin-top:20px;width:100%;height:52px;border:none;border-radius:14px;background:#2E8FFF;color:#03101F;font-family:'Sora',sans-serif;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;"><span style="font-family:'Material Symbols Rounded';font-size:19px;">refresh</span>Retry withdrawal</button>
+      <span style="margin-top:13px;font-size:13px;font-weight:600;color:rgba(244,247,251,.55);">Contact support</span>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute;left:1200px;top:4020px;width:412px;">
+  <div data-drags-parent="1" class="lbl">15 · Bottom Navigation — states</div>
+  <div data-screen-label="Bottom Nav" style="position:relative;width:412px;border-radius:28px;overflow:hidden;background:#0A0F14;border:1px solid rgba(255,255,255,.05);box-shadow:0 36px 80px rgba(0,0,0,.55);font-family:'Manrope',sans-serif;color:#F4F7FB;padding:24px 22px 26px;">
+    <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;">Bottom navigation</div>
+    <div style="font-size:12px;color:rgba(244,247,251,.5);margin-top:4px;">Active state shown per tab · filled icon, blue label & indicator dot.</div>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:20px;">
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#5CA8FF;margin-bottom:7px;">HOME ACTIVE</div><div style="border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.06);"><dc-import name="RewardNav" active="home" hint-size="368px,72px"></dc-import></div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#5CA8FF;margin-bottom:7px;">OFFERS ACTIVE</div><div style="border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.06);"><dc-import name="RewardNav" active="offers" hint-size="368px,72px"></dc-import></div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#5CA8FF;margin-bottom:7px;">REWARDS ACTIVE</div><div style="border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.06);"><dc-import name="RewardNav" active="rewards" hint-size="368px,72px"></dc-import></div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#5CA8FF;margin-bottom:7px;">WALLET ACTIVE</div><div style="border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.06);"><dc-import name="RewardNav" active="wallet" hint-size="368px,72px"></dc-import></div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#5CA8FF;margin-bottom:7px;">PROFILE ACTIVE</div><div style="border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.06);"><dc-import name="RewardNav" active="profile" hint-size="368px,72px"></dc-import></div></div>
+    </div>
+  </div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  ringHome = React.createRef(); barHome = React.createRef();
+  xpPC = React.createRef(); ringPC = React.createRef(); cdPC = React.createRef();
+
+  confettiPC = Array.from({length:44}, (_,i)=>{
+    const cols=['#2E8FFF','#5CA8FF','#9CC9FF','#F4F7FB','#1E6FE0'];
+    return { left:+(Math.random()*100).toFixed(1), size:5+Math.round(Math.random()*5), h:8+Math.round(Math.random()*7),
+      color:cols[i%cols.length], radius:Math.random()>.5?6:1, dur:+(2.8+Math.random()*2).toFixed(2), delay:+(Math.random()*1.8).toFixed(2) };
+  });
+  coinsPC = Array.from({length:10}, (_,i)=>{
+    const a=(i/10)*Math.PI*2, r=54+Math.random()*30;
+    return { tx:Math.round(Math.cos(a)*r)+'px', ty:Math.round(Math.sin(a)*r-12)+'px', delay:+(Math.random()*.3).toFixed(2) };
+  });
+
+  homeMissions = [
+    {icon:'sports_esports', title:'Play 3 quick games', prog:66, meta:'2 of 3 · ~8 min left', reward:'+₹20'},
+    {icon:'rate_review', title:'Complete a short survey', prog:0, meta:'Not started · ~5 min', reward:'+₹35'}
+  ];
+  homeOffers = [
+    {icon:'account_balance', tag:'FINANCE', title:'Open a demat account', reward:'₹450', diff:'Medium'},
+    {icon:'sports_esports', tag:'GAMING', title:'Reach level 10 in Coin Saga', reward:'₹220', diff:'Hard'}
+  ];
+  homeActivity = [
+    {icon:'arrow_outward', title:'Withdrew to UPI', sub:'Today, 2:14 PM', amt:'-₹100', color:'#F4F7FB'},
+    {icon:'bolt', title:'Mission completed', sub:'Today, 1:50 PM', amt:'+240 XP', color:'#2E8FFF'},
+    {icon:'redeem', title:'Offer reward credited', sub:'Yesterday', amt:'+₹85', color:'#2E8FFF'}
+  ];
+
+  notifsNew = [
+    {icon:'bolt', title:'You earned 240 XP', sub:'Mission “Daily Spin” completed', time:'2m'},
+    {icon:'account_balance_wallet', title:'₹100 withdrawn successfully', sub:'Sent to UPI •••• 4821', time:'12m'},
+    {icon:'emoji_events', title:'Achievement unlocked', sub:'“First Withdrawal” badge earned', time:'15m'}
+  ];
+  notifsOld = [
+    {icon:'local_fire_department', title:'Keep your streak alive', sub:'Complete 1 task before midnight', time:'1h'},
+    {icon:'local_offer', title:'New high-reward offer', sub:'Earn ₹450 — open a demat account', time:'3h'},
+    {icon:'redeem', title:'Reward available to claim', sub:'A ₹50 bonus is waiting for you', time:'5h'},
+    {icon:'check_circle', title:'Mission completed', sub:'“Watch 2 videos” marked done', time:'1d'}
+  ];
+
+  profileBadges = [
+    {icon:'payments', done:true},{icon:'local_fire_department', done:true},{icon:'savings', done:false},{icon:'military_tech', done:false}
+  ].map(b=>({ icon:b.icon, bg:b.done?'rgba(46,143,255,.12)':'rgba(255,255,255,.04)', border:b.done?'rgba(46,143,255,.4)':'rgba(255,255,255,.07)', fg:b.done?'#2E8FFF':'rgba(244,247,251,.3)', fill:b.done?1:0 }));
+
+  paymentMethods = [
+    {icon:'account_balance', label:'HDFC Bank •••• 8842', tag:'PRIMARY', tagColor:'#2E8FFF'},
+    {icon:'qr_code_2', label:'UPI •••• 4821', tag:'LINKED', tagColor:'rgba(244,247,251,.4)'}
+  ];
+
+  settingsRows = [
+    {icon:'notifications', label:'Notifications', color:'rgba(244,247,251,.85)'},
+    {icon:'shield', label:'Security & privacy', color:'rgba(244,247,251,.85)'},
+    {icon:'help', label:'Help & support', color:'rgba(244,247,251,.85)'},
+    {icon:'logout', label:'Log out', color:'#FF6B5B'}
+  ];
+
+  achievementsRaw = [
+    {icon:'payments', title:'First Withdrawal', sub:'Cash out for the first time', state:'done'},
+    {icon:'local_fire_department', title:'7 Day Streak', sub:'Earn every day for a week', state:'progress', prog:57, label:'4 / 7 days'},
+    {icon:'savings', title:'₹1,000 Earned', sub:'Reach ₹1,000 lifetime earnings', state:'progress', prog:34, label:'₹340 / ₹1,000'},
+    {icon:'military_tech', title:'Offer Master', sub:'Complete 25 offers', state:'progress', prog:20, label:'5 / 25 offers'},
+    {icon:'diversity_3', title:'Referral Champion', sub:'Invite 10 friends to join', state:'locked', label:'Locked'}
+  ];
+
+  rewardsRaw = [
+    {lvl:'LV 1', reward:'Welcome ₹10', state:'claimed'},
+    {lvl:'LV 2', reward:'₹50 Bonus', state:'claimed'},
+    {lvl:'LV 5', reward:'₹100 + Badge', state:'current'},
+    {lvl:'LV 8', reward:'₹250 Reward', state:'locked'},
+    {lvl:'LV 12', reward:'Premium Chest', state:'premium'},
+    {lvl:'LV 20', reward:'₹1,000 Jackpot', state:'premium'}
+  ];
+
+  offerRules = [
+    {num:'1', text:'Install the app using the button below'},
+    {num:'2', text:'Open the app and complete the quick tutorial'},
+    {num:'3', text:'Reach level 10 within 7 days'},
+    {num:'4', text:'Reward credits to your wallet within 48 hours'}
+  ];
+
+  walletTxnsRaw = [
+    {icon:'arrow_outward', title:'Withdrawal to UPI', sub:'Today · 2:14 PM', amt:'-₹100', state:'done'},
+    {icon:'redeem', title:'Offer reward', sub:'Yesterday', amt:'+₹85', state:'done'},
+    {icon:'bolt', title:'Daily login bonus', sub:'Yesterday', amt:'+₹10', state:'done'},
+    {icon:'rate_review', title:'Survey reward', sub:'Pending review', amt:'+₹35', state:'pending'},
+    {icon:'account_balance', title:'Withdrawal to Bank', sub:'2 days ago', amt:'-₹500', state:'done'}
+  ];
+
+  mapAchievements(){
+    return this.achievementsRaw.map(a=>{
+      const done=a.state==='done', locked=a.state==='locked', prog=a.state==='progress';
+      return { icon:a.icon, title:a.title, sub:a.sub,
+        iconBg: locked?'rgba(255,255,255,.04)':'rgba(46,143,255,.12)',
+        iconFg: locked?'rgba(244,247,251,.3)':'#2E8FFF', iconFill: done?1:0,
+        cardBorder: done?'rgba(46,143,255,.3)':'rgba(255,255,255,.06)',
+        chip: done?'Completed':(locked?'Locked':a.label),
+        chipColor: done?'#2E8FFF':(locked?'rgba(244,247,251,.4)':'#5CA8FF'),
+        chipBg: done?'rgba(46,143,255,.14)':'transparent',
+        isProg: prog, prog:a.prog||0, opacity: locked?'.55':'1' };
+    });
+  }
+
+  mapRewards(){
+    return this.rewardsRaw.map(r=>{
+      const claimed=r.state==='claimed', current=r.state==='current', premium=r.state==='premium';
+      return { lvl:r.lvl, reward:r.reward,
+        nodeIcon: claimed?'check':(current?'my_location':(premium?'workspace_premium':'lock')),
+        nodeBg: claimed?'#2E8FFF':(current?'rgba(46,143,255,.18)':'rgba(255,255,255,.05)'),
+        nodeFg: claimed?'#03101F':(current?'#2E8FFF':(premium?'#5CA8FF':'rgba(244,247,251,.35)')),
+        nodeBorder: current?'#2E8FFF':(premium?'rgba(46,143,255,.4)':'rgba(255,255,255,.08)'),
+        cardBg: current?'#0E1822':'#10171C',
+        cardBorder: current?'rgba(46,143,255,.3)':(premium?'rgba(46,143,255,.18)':'rgba(255,255,255,.06)'),
+        rewardColor: claimed?'rgba(244,247,251,.55)':(current||premium?'#2E8FFF':'rgba(244,247,251,.75)'),
+        tag: claimed?'Claimed':(current?'You are here':(premium?'Premium':'Locked')),
+        tagColor: claimed?'rgba(244,247,251,.45)':(current?'#2E8FFF':(premium?'#5CA8FF':'rgba(244,247,251,.4)')),
+        line: '#1a2531' };
+    });
+  }
+
+  mapWallet(){
+    return this.walletTxnsRaw.map(t=>{
+      const pos=t.amt.startsWith('+'), pending=t.state==='pending';
+      return { icon:t.icon, title:t.title, sub:t.sub, amt:t.amt,
+        amtColor: pos?'#2E8FFF':'#F4F7FB',
+        statusChip: pending?'Pending':'Success',
+        statusColor: pending?'#5CA8FF':'rgba(244,247,251,.4)' };
+    });
+  }
+
+  buildStreak(activeCount){
+    const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    return days.map((day,i)=>{
+      const on=i<activeCount, today=i===activeCount-1, gift=i===6 && !on;
+      return {
+        day,
+        icon: today?'local_fire_department':(on?'check':(gift?'redeem':'')),
+        bg: on?'#2E8FFF':(gift?'rgba(46,143,255,.1)':'rgba(255,255,255,.04)'),
+        border: on?'rgba(46,143,255,.6)':(gift?'rgba(46,143,255,.3)':'rgba(255,255,255,.07)'),
+        fg: on?'#03101F':(gift?'#5CA8FF':'rgba(244,247,251,.5)'),
+        label: on?'#2E8FFF':'rgba(244,247,251,.4)'
+      };
+    });
+  }
+
+  renderVals(){
+    return {
+      ringHome:this.ringHome, barHome:this.barHome, xpPC:this.xpPC, ringPC:this.ringPC, cdPC:this.cdPC,
+      confettiPC:this.confettiPC, coinsPC:this.coinsPC,
+      homeMissions:this.homeMissions, homeOffers:this.homeOffers, homeActivity:this.homeActivity,
+      notifsNew:this.notifsNew, notifsOld:this.notifsOld,
+      profileBadges:this.profileBadges, paymentMethods:this.paymentMethods, settingsRows:this.settingsRows,
+      achievements:this.mapAchievements(), rewards:this.mapRewards(), offerRules:this.offerRules, walletTxns:this.mapWallet(),
+      streakHome:this.buildStreak(4), streakPC:this.buildStreak(1)
+    };
+  }
+
+  componentDidMount(){
+    const circ=326.7, fmt=n=>Math.round(n).toLocaleString('en-IN');
+    const ease=t=>1-Math.pow(1-t,3), dur=1600, begin=350, t0=performance.now();
+    this._anim=setInterval(()=>{
+      const t=Math.min(1,Math.max(0,(performance.now()-t0-begin)/dur)), e=ease(t);
+      if(this.ringHome.current) this.ringHome.current.style.strokeDashoffset=(circ-(circ-circ*(1-0.81))*e).toFixed(1);
+      if(this.barHome.current) this.barHome.current.style.width=(81*e).toFixed(2)+'%';
+      if(this.xpPC.current) this.xpPC.current.textContent=fmt(1000+240*e);
+      if(this.ringPC.current) this.ringPC.current.style.strokeDashoffset=(circ-(circ-circ*(1-0.48))*e).toFixed(1);
+      if(t>=1) clearInterval(this._anim);
+    }, 33);
+
+    let secs=24*3600-1; const pad=n=>String(n).padStart(2,'0');
+    const r=()=>{ const h=Math.floor(secs/3600), m=Math.floor((secs%3600)/60), s=secs%60; if(this.cdPC.current) this.cdPC.current.textContent=`${pad(h)}:${pad(m)}:${pad(s)}`; };
+    r(); this._cd=setInterval(()=>{ secs=Math.max(0,secs-1); r(); }, 1000);
+  }
+  componentWillUnmount(){ clearInterval(this._anim); clearInterval(this._cd); }
+}
+</script>
+<script>
+(async () => {
+  if (!document.title || !document.title.trim()) document.title = "Reward App";
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    print-color-adjust: exact; -webkit-print-color-adjust: exact;\n    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        !settleRoot.querySelector('.sc-placeholder');
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  // Reveal content gated on scroll or visibility before printing. Lazy <img>,
+  // IntersectionObserver fade-ins, and collapsed <details> don't render while
+  // off-screen, so a long page would print with them blank or closed. Open
+  // every <details>, force native-lazy images eager, and scroll the document
+  // through its full height to trip lazy-load + IO; then wait (bounded) for the
+  // newly-triggered images. Inert for deck-stage (slides aren't scroll-gated).
+  try {
+    for (const d of document.querySelectorAll('details')) d.open = true;
+    for (const img of document.querySelectorAll('img[loading="lazy"]'))
+      img.loading = 'eager';
+    const scroller = document.scrollingElement || document.documentElement;
+    const full = Math.max(scroller.scrollHeight, document.body.scrollHeight);
+    const step = window.innerHeight || 800;
+    for (let y = 0; y <= full; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+    window.scrollTo(0, 0);
+    await Promise.race([
+      Promise.all(
+        [...document.images].map((img) =>
+          img.complete
+            ? null
+            : new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+        )
+      ),
+      new Promise((r) => setTimeout(r, 4000)),
+    ]);
+  } catch (e) {}
+  try { await document.fonts.ready; } catch (e) {}
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  // Re-append deck-stage's @page last so no author @page can add a margin and
+  // spill each full-bleed slide onto two sheets. Backstop for old copies.
+  if (ds) {
+    let pg = document.getElementById('deck-stage-print-page');
+    if (!pg) {
+      pg = document.createElement('style');
+      pg.textContent = '@page{size:' + (+ds.getAttribute('width') || 1920) +
+        'px ' + (+ds.getAttribute('height') || 1080) + 'px;margin:0}';
+    }
+    document.body.appendChild(pg);
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+  } catch (e) {}
+  // Size the PDF page to the rendered design unless the file opted into
+  // standard paper via @page{size:letter|A4|…}. Decks own their own @page.
+  var __m = null;
+  try { __m = (() => {
+  var docEl = document.documentElement;
+  var doc = { width: docEl.scrollWidth, height: docEl.scrollHeight };
+
+  var ds = document.querySelector('deck-stage');
+  if (ds) {
+    var dw = Number(ds.getAttribute('width')) || 1920;
+    var dh = Number(ds.getAttribute('height')) || 1080;
+    var n = typeof ds.length === 'number' ? ds.length : ds.children.length;
+    var idx = typeof ds.index === 'number' ? ds.index : 0;
+    var frames = [];
+    for (var i = 0; i < n; i++) frames.push({ left: 0, top: 0, width: dw, height: dh });
+    return { kind: 'deck', doc: doc, frames: frames,
+      authored: frames.map(function(){return{width:true,height:true}}),
+      deck: { width: dw, height: dh, slideCount: n, index: idx },
+      signals: { paperPage: false, pxPage: false } };
+  }
+
+  var paperPage = false, pxPage = false;
+  var eachRule = function (fn) {
+    for (var s = 0; s < document.styleSheets.length; s++) {
+      var rs; try { rs = document.styleSheets[s].cssRules; } catch (e) { continue; }
+      for (var r = 0; r < rs.length; r++) {
+        fn(rs[r]);
+        if (rs[r].cssRules) for (var n = 0; n < rs[r].cssRules.length; n++) fn(rs[r].cssRules[n]);
+      }
+    }
+  };
+  eachRule(function (r) {
+    if (r.type !== 6) return;
+    var m = /\bsize\s*:\s*([^;}]+)/i.exec(r.cssText || '');
+    if (!m) return;
+    if (/\b(letter|a[3-5]|legal|ledger)\b/i.test(m[1])) paperPage = true;
+    if (/\d+(?:\.\d+)?px\b/i.test(m[1])) pxPage = true;
+  });
+  var signals = { paperPage: paperPage, pxPage: pxPage };
+
+  if (paperPage) {
+    return { kind: 'paper-doc', doc: doc, signals: signals,
+      frames: [{ left: 0, top: 0, width: doc.width, height: doc.height }],
+      authored: [{ width: false, height: false }] };
+  }
+
+  var pxVal = function (v) {
+    var m = /^(\d+(?:\.\d+)?)px$/.exec(v || ''); return m ? +m[1] : 0;
+  };
+  var authoredPx = function (el, prop) {
+    if (pxVal(el.style[prop])) return true;
+    var attr = el.getAttribute(prop);
+    if (attr && /^\d+$/.test(attr)) return true;
+    var hit = false;
+    eachRule(function (r) {
+      if (hit || r.type !== 1 || !r.style) return;
+      try { if (el.matches(r.selectorText) && pxVal(r.style[prop])) hit = true; } catch (e) {}
+    });
+    return hit;
+  };
+
+  var el = document.body;
+  for (;;) {
+    var kids = [];
+    for (var c = 0; c < el.children.length; c++) {
+      var t = el.children[c].tagName;
+      if (t !== 'SCRIPT' && t !== 'STYLE' && t !== 'TEMPLATE') kids.push(el.children[c]);
+    }
+    if (kids.length !== 1 || !(kids[0] instanceof HTMLElement)) break;
+    el.setAttribute('data-om-frame-wrap', '');
+    el = kids[0];
+    if (authoredPx(el, 'width')) break;
+  }
+
+  var sx = window.scrollX || 0, sy = window.scrollY || 0;
+  var rectOf = function (e) {
+    var r = e.getBoundingClientRect();
+    var oy; try { oy = getComputedStyle(e).overflowY; } catch (err) {}
+    var h = oy === 'visible' ? Math.max(r.height, e.scrollHeight || 0) : r.height;
+    return { left: r.left + sx, top: r.top + sy, width: r.width, height: h };
+  };
+
+  // Multi-frame: ≥2 visible non-fixed children, each with authored px width
+  // AND height, all within ±2px of each other. Off unless the page opts in
+  // via data-om-multi-frame on the stop element — guards against card grids
+  // and pricing tables that match the geometry but aren't separate canvases.
+  if (el.hasAttribute('data-om-multi-frame')) {
+    var cands = [];
+    for (var k = 0; k < el.children.length; k++) {
+      var ch = el.children[k];
+      var cs; try { cs = getComputedStyle(ch); } catch (e) { continue; }
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.position === 'fixed') continue;
+      var rc = rectOf(ch);
+      if (rc.width < 2 || rc.height < 2) continue;
+      if (!authoredPx(ch, 'width') || !authoredPx(ch, 'height')) continue;
+      cands.push(rc);
+    }
+    if (cands.length >= 2) {
+      var w0 = cands[0].width, h0 = cands[0].height, ok = true;
+      for (var q = 1; q < cands.length; q++)
+        if (Math.abs(cands[q].width - w0) > 2 || Math.abs(cands[q].height - h0) > 2) ok = false;
+      if (ok) return { kind: 'multi-frame', doc: doc, signals: signals,
+        frames: cands, authored: cands.map(function(){return{width:true,height:true}}) };
+    }
+  }
+
+  return { kind: 'single-canvas', doc: doc, signals: signals,
+    frames: [rectOf(el)],
+    authored: [{ width: authoredPx(el, 'width'), height: authoredPx(el, 'height') }] };
+})(); } catch (e) {}
+  var frame = null;
+  if (__m && __m.kind === 'single-canvas') {
+    var f = __m.frames && __m.frames[0];
+    if (f && f.width >= 200 && f.height >= 200) {
+      frame = f;
+      var fst = document.createElement('style');
+      fst.textContent = '@media print{@page{size:' + f.width + 'px ' + f.height +
+        'px;margin:0}html,body,[data-om-frame-wrap]{padding:0!important;' +
+        'margin:0!important;background:none!important}}';
+      document.body.appendChild(fst);
+    }
+  }
+  // Relax break-inside on oversized elements. An element taller than a
+  // printable page can't honor break-inside: avoid — browsers either overflow
+  // it or push it whole to the next page, leaving a blank gap, then break it
+  // anyway at an arbitrary point. After the final layout (content revealed,
+  // animations jumped), find elements taller than a page that still compute
+  // break-inside: avoid and reset them to auto, so the browser breaks them at
+  // their children's boundaries instead (children keep their own avoid). PAGE_PX
+  // is a conservative portrait estimate at 96 CSS px/in — Letter/A4 usable
+  // height minus our 0.5in margins — so only clearly-oversized elements are
+  // touched and under-page elements still stay whole. Skipped for decks (slides
+  // are sized to the page) and for fixed-size canvases (frame set, or an author
+  // px-based @page) — runs as before for flowing docs on letter/A4.
+  try {
+    if (!ds && !frame && !(__m && __m.signals && __m.signals.pxPage)) {
+      const PAGE_PX = 1024;
+      // Our print defaults add a real @page margin only when the source has
+      // no @page of its own; computed style can't tell us (it reports screen
+      // media), so read the injected rule directly.
+      const defaults = document.querySelector('style[data-omelette-print-defaults]');
+      const pageInset = /@page\s*\{[^}]*margin/.test(defaults ? defaults.textContent || '' : '');
+      const SEL = 'section,article,figure,table,pre,blockquote,[class~="card" i],[class~="page" i],[class~="sheet" i]';
+      for (const el of document.body.querySelectorAll(SEL)) {
+        if (el instanceof HTMLElement && el.offsetHeight > PAGE_PX) {
+          el.setAttribute('data-om-oversized', '');
+          // Fake-paged docs simulate sheets with over-tall break-after:page
+          // boxes; honoring the break spills half-blank pages and ends a
+          // colored box mid-sheet. Flow them, and (only when we own the page
+          // inset) drop the redundant padding/background via the rule below.
+          const cs = getComputedStyle(el);
+          if (cs.breakAfter === 'page' || cs.pageBreakAfter === 'always') {
+            el.setAttribute('data-om-fakepage', '');
+          }
+        }
+      }
+      const ost = document.createElement('style');
+      ost.textContent = '@media print{' +
+        '[data-om-oversized]{break-inside:auto !important;page-break-inside:auto !important}' +
+        '[data-om-fakepage]{break-after:auto !important;page-break-after:auto !important}' +
+        (pageInset ? '[data-om-fakepage]{padding:0 !important;background:none !important}' : '') +
+        '}';
+      document.head.appendChild(ost);
+    }
+  } catch (e) {}
+  // macOS Preview renders Skia-PDF Luminosity soft-masks as opaque grey boxes;
+  // swap the CSS that triggers them for Preview-safe forms.
+  try {
+    for (const el of document.body.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+
+      if (cs.boxShadow !== 'none' && cs.filter === 'none') {
+        const outs = [], kept = [];
+        for (const s of cs.boxShadow.split(/,(?![^(]*[)])/)) {
+          const t = s.trim();
+          const m = t.match(/^(rgba?[(][^)]+[)]) (-?[0-9.]+px) (-?[0-9.]+px) ([0-9.]+px) -?[0-9.]+px$/);
+          if (m && parseFloat(m[4]) > 0) outs.push('drop-shadow(' + m[2] + ' ' + m[3] + ' ' + m[4] + ' ' + m[1] + ')');
+          else kept.push(t);
+        }
+        if (outs.length) {
+          el.style.setProperty('filter', outs.join(' '), 'important');
+          el.style.setProperty('box-shadow', kept.join(', ') || 'none', 'important');
+        }
+      }
+
+      const mask = cs.maskImage && cs.maskImage !== 'none' ? cs.maskImage : cs.webkitMaskImage;
+      if (mask && mask !== 'none' && cs.filter === 'none') el.style.setProperty('filter', 'opacity(1)', 'important');
+    }
+  } catch (e) {}
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>
