@@ -3130,9 +3130,57 @@ function StatusBar() {
 // --- Root Page Component ---
 function PrototypePageInner() {
   const searchParams = useSearchParams()
-  const initialScreen = Math.min(15, Math.max(0, Number(searchParams.get("screen") ?? 0))) as Screen
-  const [screen, setScreen] = useState<Screen>(initialScreen)
+  const [screen, setScreen] = useState<Screen>(0)
   const go = (s: Screen) => setScreen(s)
+
+  const isEmbed = searchParams.has("screen")
+
+  useEffect(() => {
+    const n = Number(searchParams.get("screen") ?? 0)
+    const s = Math.min(15, Math.max(0, isNaN(n) ? 0 : n)) as Screen
+    setScreen(s)
+  }, [searchParams])
+
+  const screenContent = (
+    <div className="h-full relative">
+      <AnimatePresence mode="wait">
+        {screen === 0 && <div key="e0" className="h-full w-full absolute inset-0"><CashoutSuccess onNext={() => go(1)} /></div>}
+        {screen === 1 && <div key="e1" className="h-full w-full absolute inset-0"><NextGoal onStart={() => go(3)} onHome={() => go(3)} /></div>}
+        {screen === 2 && <div key="e2" className="h-full w-full absolute inset-0"><NotificationCenterScreen onBack={() => go(3)} /></div>}
+        {screen === 3 && <div key="e3" className="h-full w-full absolute inset-0"><HomeScreen onGoal={() => go(1)} initialTab="Home" /></div>}
+        {screen === 4 && <div key="e4" className="h-full w-full absolute inset-0"><HomeScreen onGoal={() => go(1)} initialTab="Profile" /></div>}
+        {screen === 5 && <div key="e5" className="h-full w-full absolute inset-0"><AchievementsScreen onBack={() => go(4)} /></div>}
+        {screen === 6 && <div key="e6" className="h-full w-full absolute inset-0"><HomeScreen onGoal={() => go(1)} initialTab="Rewards" /></div>}
+        {screen === 7 && <div key="e7" className="h-full w-full absolute inset-0"><OfferDetailsScreen onBack={() => go(3)} /></div>}
+        {screen === 8 && <div key="e8" className="h-full w-full absolute inset-0"><HomeScreen onGoal={() => go(1)} initialTab="Wallet" /></div>}
+        {screen === 9 && <div key="e9" className="h-full w-full absolute inset-0"><EmptyStateScreen icon={BellOff} title="You're all caught up" sub="New rewards, missions and streak updates will land right here." btnLabel="Explore offers" onAction={() => go(3)} /></div>}
+        {screen === 10 && <div key="e10" className="h-full w-full absolute inset-0"><EmptyStateScreen icon={FileText} title="No withdrawals yet" sub="Cash out your earnings and your history will appear here." btnLabel="Withdraw now" onAction={() => go(8)} /></div>}
+        {screen === 11 && <div key="e11" className="h-full w-full absolute inset-0"><EmptyStateScreen icon={CheckCircle2} title="No completed offers yet" sub="Finish your first offer to start stacking real cash rewards." btnLabel="Browse offers" onAction={() => go(3)} /></div>}
+        {screen === 12 && <div key="e12" className="h-full w-full absolute inset-0"><LoadingSkeletonScreen /></div>}
+        {screen === 13 && <div key="e13" className="h-full w-full absolute inset-0"><ErrorNetworkScreen onRetry={() => go(3)} /></div>}
+        {screen === 14 && <div key="e14" className="h-full w-full absolute inset-0"><ErrorPaymentScreen onRetry={() => go(8)} /></div>}
+        {screen === 15 && <div key="e15" className="h-full w-full absolute inset-0"><BottomNavStatesScreen /></div>}
+      </AnimatePresence>
+    </div>
+  )
+
+  if (isEmbed) {
+    return (
+      <div
+        className={`${sora.className} ${manrope.className}`}
+        style={{ width: 390, height: 844, overflow: "hidden", background: "#F8FAFC", position: "relative" }}
+      >
+        <div className="absolute z-50 pointer-events-none" style={{ top: 14, left: "50%", transform: "translateX(-50%)", width: 110, height: 30, borderRadius: 20, background: "#000" }} />
+        <StatusBar />
+        <div className="absolute inset-0 overflow-hidden bg-[#F8FAFC]">
+          {screenContent}
+        </div>
+        <div className="absolute bottom-2 left-0 right-0 flex justify-center z-40">
+          <div className="w-28 h-1 rounded-full" style={{ background: "rgba(15, 23, 42, 0.2)" }} />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
