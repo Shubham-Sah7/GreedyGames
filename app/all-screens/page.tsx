@@ -1,765 +1,439 @@
 "use client"
 
 import React from "react"
+import { Inter } from "next/font/google"
 
-// ─── Design tokens ───────────────────────────────────────────────────────────
-const C = {
-  ux:         { bg: "#FFFBEB", border: "#F59E0B", tagBg: "#FEF3C7", tagColor: "#92400E", label: "UX Note" },
-  dev:        { bg: "#EFF6FF", border: "#60A5FA", tagBg: "#DBEAFE", tagColor: "#1E40AF", label: "Dev Note" },
-  product:    { bg: "#F0FDF4", border: "#4ADE80", tagBg: "#DCFCE7", tagColor: "#14532D", label: "Hypothesis" },
-  psychology: { bg: "#F9FAFB", border: "#94A3B8", tagBg: "#F1F5F9", tagColor: "#334155", label: "Psychology" },
-} as const
-type NoteType = keyof typeof C
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] })
 
-interface Annotation {
-  type: NoteType
-  emoji: string
-  title: string
-  body: string[]
-  metric?: string
-}
+// ─── Constants ────────────────────────────────────────────────────────────────
+const PHONE_W = 390
+const PHONE_H = 844
+const SCALE = 0.52
+const CW = Math.round(PHONE_W * SCALE)
+const CH = Math.round(PHONE_H * SCALE)
+const CONTENT_W = 580
 
-interface ScreenSection {
-  screenId: number
+// ─── Types ────────────────────────────────────────────────────────────────────
+interface Card {
   label: string
-  description: string
-  left: Annotation[]
-  right: Annotation[]
-  bottom?: Annotation[]
+  text: string
+  mono?: boolean
+  light?: boolean
+  dashed?: boolean
 }
 
-// ─── Case study data ─────────────────────────────────────────────────────────
-const SECTIONS: ScreenSection[] = [
+interface ScreenData {
+  screenId: number
+  index: number
+  name: string
+  goal: string
+  problem: string
+  cards: Card[]
+  result: string
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const FLOW: { label: string; text: string }[] = [
+  {
+    label: "Problem",
+    text: "Users cash out once.\nMost never come back.",
+  },
+  {
+    label: "Insight",
+    text: "There is no next goal after cashout.\nThe earning loop breaks at the highest point.",
+  },
+  {
+    label: "Idea",
+    text: "Give users a clear next goal\nbefore they close the app.",
+  },
+  {
+    label: "Solution",
+    text: "Progress map · Daily streak · Smart notification",
+  },
+  {
+    label: "Expected result",
+    text: "Better post-first-cashout retention.\nMore surveys completed per user.",
+  },
+]
+
+const METRICS: { label: string; today: string; goal: string }[] = [
+  { label: "Return after first cashout", today: "~20%", goal: "30%+" },
+  { label: "Day-7 retention", today: "~14%", goal: "20%+" },
+  { label: "Users who accept next goal", today: "No metric", goal: "35%+ tap rate" },
+]
+
+const SCREENS: ScreenData[] = [
   {
     screenId: 3,
-    label: "Home Dashboard · Home Tab",
-    description: "The primary daily surface. Every element is placed to reduce friction and increase earning momentum.",
-    left: [
+    index: 1,
+    name: "Home Dashboard",
+    goal: "The first screen users see every day. The job is to get them from open to action in under ten seconds.",
+    problem: "Users open the app but don't know where to start.\n\nToo many choices lead to no action. Most users scroll without tapping.",
+    cards: [
       {
-        type: "ux",
-        emoji: "🔥",
-        title: "Daily Streak",
-        body: [
-          "Purpose: Build a daily earning habit.",
-          "Users who maintain a streak are 3× more likely to return on Day 7.",
-          "The streak counter is placed at eye level, above the fold.",
-        ],
-        metric: "↑ Day-7 Retention",
+        label: "Design Decision",
+        text: "Show one recommended survey at the top — not a list, not a grid. One clear thing to do next.",
       },
       {
-        type: "ux",
-        emoji: "🎯",
-        title: "Recommended Survey Card",
-        body: [
-          "Problem: Users abandon when overwhelmed by too many choices.",
-          "Solution: Surface only the single highest-paying, best-fit survey.",
-          "Reduces cognitive load before the first action.",
-        ],
-        metric: "↑ Survey Completion Rate",
+        label: "Why It Helps",
+        text: "When the next action is obvious, users take it. When it isn't, they leave.",
       },
       {
-        type: "psychology",
-        emoji: "🧠",
-        title: "Loss Aversion",
-        body: [
-          "Behavioural Principle: Losses feel ~2× more painful than equivalent gains.",
-          "A broken streak feels like losing something already owned.",
-          "This motivates daily opens even without a pending reward.",
-        ],
+        label: "Design Decision",
+        text: "The daily streak counter appears before anything else. People protect things they have already built. A broken streak feels like a loss.",
+      },
+      {
+        label: "Why It Helps",
+        text: "Users return daily not because of a new reward, but because they don't want to lose what they already have.",
+      },
+      {
+        label: "Developer Note",
+        text: "Cache the balance locally. Never show ₹0 while the API loads. Display the last known value.",
+        mono: true,
+      },
+      {
+        label: "Out of Scope",
+        text: "Social features and referral improvements are left out of this version. The focus here is reducing the time from app open to first action.",
+        light: true,
+        dashed: true,
       },
     ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Earnings Counter Animation",
-        body: [
-          "Use count-up animation on balance reveal.",
-          "Duration: 600ms · Easing: ease-out cubic",
-          "Cache balance locally — display last known value on network failure.",
-          "Never show ₹0 if cached value exists.",
-        ],
-      },
-      {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · DAU Growth",
-        body: [
-          "Introducing Daily Missions + visible streak may increase Day-7 retention by ~25–35%.",
-          "Users with an active streak are significantly less likely to churn.",
-        ],
-        metric: "↑ DAU · ↑ Return Sessions",
-      },
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Streak Update Logic",
-        body: [
-          "Increment streak only after a survey is completed — not on app open.",
-          "Prevents streak inflation and maintains perceived value.",
-          "Persist via API + local cache for offline resilience.",
-        ],
-      },
-    ],
-    bottom: [
-      {
-        type: "ux",
-        emoji: "📐",
-        title: "Typography Hierarchy",
-        body: [
-          "Three levels: Hero balance (28px black) → Section label (11px uppercase) → Body (13px medium).",
-          "Consistent hierarchy reduces time to scan and locate relevant information.",
-        ],
-      },
-      {
-        type: "ux",
-        emoji: "🎨",
-        title: "Gold Reserved for Reward Moments",
-        body: [
-          "The gold/amber colour is used exclusively for earnings, coins, and reward milestones.",
-          "Overuse would dilute its signal value. Every other accent is purple.",
-        ],
-      },
-    ],
+    result: "Higher survey start rate within the first session.\nLower early drop-off.\nUsers spend less time deciding and more time earning.",
   },
 
   {
     screenId: 0,
-    label: "Cashout Success",
-    description: "A deliberate celebration moment. The design signals that a real-world outcome has occurred.",
-    left: [
+    index: 2,
+    name: "Cashout Success",
+    goal: "The highest-value moment in the product. Most apps end the experience here. This design uses it as a starting point.",
+    problem: "After a successful cashout, most users leave and don't return.\n\nThe app treats this as a final step. It should be a transition point.",
+    cards: [
       {
-        type: "ux",
-        emoji: "🎉",
-        title: "Celebration Design Rationale",
-        body: [
-          "Purpose: Reinforce the positive earning loop at its emotional peak.",
-          "Users are most open to goal-setting immediately after a successful cashout.",
-          "This is the best moment to present the 'next goal' prompt.",
-        ],
-        metric: "↑ Time to Second Cashout",
+        label: "Design Decision",
+        text: "Show the exact amount withdrawn in large type. Not a generic success message. The money needs to feel real.",
       },
       {
-        type: "psychology",
-        emoji: "🧠",
-        title: "Endowment Effect",
-        body: [
-          "Users place higher value on earnings already 'received'.",
-          "The withdrawal confirmation makes the money feel real.",
-          "Triggers motivation to begin the next earning cycle immediately.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Success Screen Animation",
-        body: [
-          "Amount reveal: spring physics, stiffness 200, damping 20.",
-          "Duration: 450ms · Ease: cubic-bezier(0.16, 1, 0.3, 1)",
-          "Do NOT play if user has already seen this screen in the same session.",
-        ],
+        label: "Why It Helps",
+        text: "When earnings feel tangible, users are more motivated to earn again. Vague confirmations don't create the same effect.",
       },
       {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Repeat Cashout",
-        body: [
-          "Showing a post-cashout celebration + progress summary will reduce the gap to a user's second cashout.",
-          "Contextual 'next goal' CTA increases goal acceptance rate.",
-        ],
-        metric: "↑ Survey Completions After Cashout",
+        label: "Design Decision",
+        text: "Present the next earning goal immediately — before the user has a chance to close the app.",
+      },
+      {
+        label: "Why It Helps",
+        text: "The moment after a win is the best time to set the next goal. The user is already engaged and feeling good about the app.",
+      },
+      {
+        label: "Developer Note",
+        text: "Animate the amount with spring physics. Duration 450ms. Do not replay the animation if the user navigates back.",
+        mono: true,
       },
     ],
+    result: "More users begin the next earning cycle immediately after cashout.\nImproved post-first-cashout retention.\nHigher Day-3 return rate.",
   },
 
   {
     screenId: 1,
-    label: "Next Goal Roadmap",
-    description: "Presented immediately after cashout. Commits the user to the next earning milestone before they leave the app.",
-    left: [
+    index: 3,
+    name: "Next Earning Goal",
+    goal: "Gives users a concrete target to work toward after cashout. Without this, there is no reason to return.",
+    problem: "After cashout, users have nothing to aim at.\n\nThe app has no memory of what the user was working toward. Every session starts from zero.",
+    cards: [
       {
-        type: "ux",
-        emoji: "🗺️",
-        title: "Commitment Prompt Design",
-        body: [
-          "Users who accept a specific earning goal are significantly more likely to return.",
-          "The roadmap is presented as a visual journey, not a list.",
-          "Visual progress creates a sense of existing investment.",
-        ],
-        metric: "↑ Day-3 Return Rate",
+        label: "Design Decision",
+        text: "Show a visual milestone map with the next earning target. The gap between now and the goal is always visible.",
       },
       {
-        type: "psychology",
-        emoji: "🧠",
-        title: "Commitment Effect",
-        body: [
-          "Explicitly accepting a goal creates psychological commitment.",
-          "Users feel cognitive dissonance if they don't follow through.",
-          "Paired with the Goal Gradient Effect: effort increases as users approach a target.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Progress Journey Animation",
-        body: [
-          "Milestones animate in sequentially with 150ms stagger delay.",
-          "Completed nodes: filled gold · In-progress: purple ring · Locked: grey.",
-          "Do not animate on back-navigation — resume at current state.",
-        ],
+        label: "Why It Helps",
+        text: "People work harder when they can see how close they are to a reward. A visible gap is more motivating than an abstract target.",
       },
       {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Completion Rate",
-        body: [
-          "Users who accept a next goal immediately after cashout will complete their next survey within 24 hours at a higher rate.",
-          "Reduces churn between earning cycles.",
-        ],
-        metric: "↑ Next-Session Survey Completion",
+        label: "Design Decision",
+        text: "The user taps to accept the goal. Accepting a specific target makes people more likely to follow through than a generic suggestion.",
+      },
+      {
+        label: "Why It Helps",
+        text: "A decision the user made themselves is harder to abandon than one the app made for them.",
+      },
+      {
+        label: "Developer Note",
+        text: "Animate milestones in sequence with a 150ms stagger. Store the accepted goal server-side, not just in local state.",
+        mono: true,
       },
     ],
+    result: "Higher Day-3 and Day-7 return rate.\nMore surveys completed in the session immediately after cashout.\nUsers always know what they are working toward.",
   },
 
   {
     screenId: 6,
-    label: "Home · Rewards Progress Tab",
-    description: "Visualises progress toward the next reward tier. Designed to leverage the Goal Gradient Effect.",
-    left: [
+    index: 4,
+    name: "Rewards Progress",
+    goal: "Makes small daily actions feel like they are building toward something real.",
+    problem: "Completing a single survey feels pointless if users can't see it adding up.\n\nWithout visible progress, users lose motivation between sessions.",
+    cards: [
       {
-        type: "ux",
-        emoji: "📊",
-        title: "Progress Bar Placement",
-        body: [
-          "Problem: Users don't know how close they are to the next reward.",
-          "Solution: Show a persistent visual progress bar after every completed survey.",
-          "Placed prominently so users understand incremental progress.",
-        ],
-        metric: "↑ Surveys Per Session",
+        label: "Design Decision",
+        text: "A progress bar updates after every completed survey. The distance to the next milestone is always visible.",
       },
       {
-        type: "ux",
-        emoji: "🏆",
-        title: "Achievement Badge Design",
-        body: [
-          "Badges celebrate meaningful milestones, not trivial actions.",
-          "Locked badges are visible to create aspiration without frustration.",
-          "Small recognition moments increase motivation without overwhelming.",
-        ],
+        label: "Why It Helps",
+        text: "Small visible progress keeps users going. The closer the next milestone appears, the more likely users are to complete one more survey.",
       },
       {
-        type: "psychology",
-        emoji: "🧠",
-        title: "Goal Gradient Effect",
-        body: [
-          "Users accelerate effort as they approach a reward.",
-          "The closer the next milestone appears, the more surveys users complete per session.",
-          "Progress bar is most effective when showing ≥ 60% completion.",
-        ],
+        label: "Design Decision",
+        text: "Locked achievements are shown — not hidden. Seeing what comes next creates a reason to keep going.",
+      },
+      {
+        label: "Why It Helps",
+        text: "A goal you can see is more compelling than one described in text. The locked badge is the next goal made visual.",
+      },
+      {
+        label: "Developer Note",
+        text: "Update progress only after confirmed survey completion. Do not increment on attempt. Avoid inflating the metric.",
+        mono: true,
       },
     ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Progress Bar Update",
-        body: [
-          "Update progress only after confirmed survey completion — not on attempt.",
-          "Use smooth transition: 900ms ease-in-out.",
-          "If progress crosses a tier boundary, trigger a milestone celebration state.",
-        ],
-      },
-      {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Session Depth",
-        body: [
-          "Visible incremental progress after each survey will increase the average number of surveys completed per session.",
-          "Mirrors Starbucks rewards card effect (pre-stamped cards increase completion).",
-        ],
-        metric: "↑ Surveys/Session · ↑ Time in App",
-      },
-    ],
+    result: "More surveys completed per session.\nHigher engagement on Days 3 to 7.\nUsers return to close the gap to the next milestone.",
   },
 
   {
     screenId: 2,
-    label: "Notification Center",
-    description: "Designed for context-aware re-engagement. Notifications should feel meaningful, not spammy.",
-    left: [
+    index: 5,
+    name: "Notification Center",
+    goal: "Brings users back at the right moment — not just any moment.",
+    problem: "Generic push notifications are ignored.\n\nUsers have trained themselves to dismiss 'Come back!' messages. Over-notification causes uninstalls.",
+    cards: [
       {
-        type: "ux",
-        emoji: "📲",
-        title: "Smart Notification Logic",
-        body: [
-          "Notifications trigger only when actionable progress is available.",
-          "Example: 'You're ₹40 away from your next cashout.'",
-          "Generic 'Come back!' messages are disabled by design.",
-        ],
-        metric: "↑ Return Sessions",
+        label: "Design Decision",
+        text: "A notification is sent only when the user is close to a meaningful milestone — a cashout threshold, a streak at risk, a high-paying survey available.",
       },
       {
-        type: "ux",
-        emoji: "🔔",
-        title: "Notification Grouping",
-        body: [
-          "NEW vs EARLIER separation reduces notification overwhelm.",
-          "Users process new items first without scanning the full history.",
-          "Read vs unread state managed server-side for cross-device consistency.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Notification Trigger Rules",
-        body: [
-          "Only trigger when: high-confidence survey available OR user is within 20% of cashout threshold.",
-          "Max 1 notification per day per user.",
-          "Respect OS-level notification permissions — never prompt more than twice.",
-        ],
+        label: "Why It Helps",
+        text: "A message that feels timely and relevant gets tapped. A message that could have been sent any day gets dismissed.",
       },
       {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Re-engagement",
-        body: [
-          "Context-aware notifications (milestone proximity) will outperform generic push by 2–3× in CTR.",
-          "Over-notification increases uninstall rate — frequency capped deliberately.",
-        ],
-        metric: "↑ Push CTR · ↓ Uninstall Rate",
+        label: "Design Decision",
+        text: "The notification copy focuses on what the user stands to lose, not what they can gain. 'Your streak ends tonight' is more effective than 'Earn more today'.",
       },
       {
-        type: "psychology",
-        emoji: "🧠",
-        title: "Loss Aversion",
-        body: [
-          "Framing: 'Your streak ends tonight' performs better than 'Open the app today.'",
-          "Users respond more strongly to protecting existing progress than gaining new rewards.",
-        ],
+        label: "Developer Note",
+        text: "Maximum one notification per day per user. Never send a notification unless a high-confidence trigger condition is met. No generic reminders.",
+        mono: true,
+      },
+      {
+        label: "Out of Scope",
+        text: "Notification preferences and opt-out controls are part of the settings flow — not in scope here.",
+        light: true,
+        dashed: true,
       },
     ],
+    result: "Higher notification tap rate.\nLower uninstall rate.\nUsers return at moments when they can make meaningful progress.",
   },
 
   {
     screenId: 5,
-    label: "Achievements",
-    description: "A motivation layer that rewards meaningful milestones — not every tap. Rarity increases perceived value.",
-    left: [
+    index: 6,
+    name: "Achievements",
+    goal: "Gives users a reason to return that has nothing to do with money. Recognition is a separate and powerful motivator.",
+    problem: "Consistent users churn at the same rate as new ones.\n\nThere is no acknowledgement for effort. Every session feels the same regardless of how much the user has done.",
+    cards: [
       {
-        type: "ux",
-        emoji: "🏅",
-        title: "Achievement Ladder Design",
-        body: [
-          "Badges are grouped by tier to signal progression, not just collection.",
-          "Locked badges are shown to create aspiration.",
-          "Completed badges remain visible — reinforces identity as an active earner.",
-        ],
+        label: "Design Decision",
+        text: "Badges are awarded at meaningful milestones — not for every action. Rarity is what makes them worth having.",
       },
       {
-        type: "psychology",
-        emoji: "🧠",
-        title: "Variable Reward System",
-        body: [
-          "Unpredictable reward timing (not every survey = badge) increases engagement.",
-          "Mirrors slot-machine psychology — but for positive earning behaviour.",
-          "Badge rarity increases perceived value of each award.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Badge Unlock State",
-        body: [
-          "Unlock event triggers server-side after qualifying action.",
-          "Client polls on app focus (not on a timer) to display new badge.",
-          "Display badge unlock as a full-screen moment (not a toast) for high-tier badges.",
-        ],
+        label: "Why It Helps",
+        text: "Small surprise rewards make people want to return. Not for the badge itself, but for the feeling of being recognised after sustained effort.",
       },
       {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Identity Effect",
-        body: [
-          "Users who unlock 3+ badges within the first week have 4× higher 30-day retention.",
-          "Achievement screens increase app sharing and word-of-mouth referrals.",
-        ],
-        metric: "↑ 30-Day Retention · ↑ Referral Rate",
+        label: "Design Decision",
+        text: "Earned badges stay permanently visible. They remind users of what they have already built — and what they could lose by leaving.",
+      },
+      {
+        label: "Developer Note",
+        text: "Unlock events are evaluated server-side. Show badge unlock as a full-screen moment for high-tier badges. Do not use a toast.",
+        mono: true,
       },
     ],
+    result: "Higher 30-day retention among users who earn three or more badges.\nIncreased word-of-mouth referrals.\nStronger sense of identity as an active earner.",
   },
 
   {
     screenId: 7,
-    label: "Offer Details",
-    description: "The conversion screen. Clarity and trust are the primary design goals.",
-    left: [
+    index: 7,
+    name: "Offer Details",
+    goal: "The conversion screen. Users decide in under five seconds whether to start an offer.",
+    problem: "Users preview offers and leave without starting.\n\nVague descriptions and unclear earning potential make the decision feel risky.",
+    cards: [
       {
-        type: "ux",
-        emoji: "💰",
-        title: "Earning Potential — Above Fold",
-        body: [
-          "The reward amount is the largest typographic element on the screen.",
-          "Users evaluate offers in under 3 seconds — clarity wins over description.",
-          "Steps/requirements shown below the fold to not delay CTA engagement.",
-        ],
-        metric: "↑ Offer Start Rate",
+        label: "Design Decision",
+        text: "The exact earning amount is the largest element on the screen. Steps and requirements appear below, not alongside.",
       },
       {
-        type: "ux",
-        emoji: "🛡️",
-        title: "Trust Signals",
-        body: [
-          "Offer provider name + category displayed prominently.",
-          "Estimated completion time shown — sets expectations and reduces drop-off.",
-          "Real earnings displayed — no vague 'earn up to' language.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Sticky CTA Footer",
-        body: [
-          "CTA button remains fixed at bottom viewport regardless of scroll depth.",
-          "Button label dynamically shows earning amount: 'Start · Earn ₹450'",
-          "Disabled state shown if user has already started this offer.",
-        ],
+        label: "Why It Helps",
+        text: "Users evaluate offers on earning potential first. Showing it clearly reduces hesitation. Burying it below description text causes drop-off.",
       },
       {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Start Rate",
-        body: [
-          "Showing exact earnings + estimated time above the fold will increase offer start rate.",
-          "Vague descriptions increase 'preview and exit' behaviour — specificity reduces it.",
-        ],
-        metric: "↑ Offer Start Rate · ↑ Completion Rate",
+        label: "Design Decision",
+        text: "Estimated time to complete is shown alongside the reward. Setting expectations reduces mid-offer abandonment.",
+      },
+      {
+        label: "Design Decision",
+        text: "The CTA button is fixed at the bottom and always visible — it never scrolls away.",
+      },
+      {
+        label: "Developer Note",
+        text: "CTA label includes the earning amount: 'Start · Earn ₹450'. Disable the button if the user has already started this offer in this session.",
+        mono: true,
       },
     ],
-  },
-
-  {
-    screenId: 8,
-    label: "Home · Wallet Tab",
-    description: "The financial trust layer. Users need to feel their money is safe and accessible.",
-    left: [
-      {
-        type: "ux",
-        emoji: "💳",
-        title: "Balance Clarity First",
-        body: [
-          "Withdrawable balance is the primary element — shown in the largest type size.",
-          "Pending balance shown separately to set realistic expectations.",
-          "UPI last-4 digits displayed for trust — users know where money goes.",
-        ],
-      },
-      {
-        type: "ux",
-        emoji: "📜",
-        title: "Transaction History",
-        body: [
-          "Recent transactions visible without navigating away from the wallet tab.",
-          "Each item shows exact amount, time, and source.",
-          "Negative transactions (withdrawals) styled differently to aid scanning.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Balance Display",
-        body: [
-          "Always fetch fresh balance on tab focus — never use stale cache.",
-          "Show skeleton while loading. Never flash ₹0 before data loads.",
-          "Withdrawal initiated state: immediately disable button and show 'Processing...'",
-        ],
-      },
-      {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Trust & Frequency",
-        body: [
-          "Users who successfully withdraw once are 5× more likely to complete additional surveys.",
-          "First successful cashout is the most important retention moment in the product.",
-        ],
-        metric: "↑ Post-Withdrawal Survey Completion",
-      },
-    ],
-  },
-
-  {
-    screenId: 4,
-    label: "Home · Profile Tab",
-    description: "Social proof, referral mechanics, and user identity. Encourages growth through community.",
-    left: [
-      {
-        type: "ux",
-        emoji: "👥",
-        title: "Refer & Earn Design",
-        body: [
-          "Referral code is copy-friendly — one tap, confirmed with visual feedback.",
-          "Progress shown: '3 of 10 active friends' — creates a clear sub-goal.",
-          "Bonus unlocks at milestone — creates urgency through visible target.",
-        ],
-        metric: "↑ Referral Rate",
-      },
-      {
-        type: "psychology",
-        emoji: "🧠",
-        title: "Social Proof",
-        body: [
-          "Leaderboard shows real earning rankings among referred friends.",
-          "Seeing peers earn motivates lagging users to engage more.",
-          "Framed as community, not competition.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Referral Tracking",
-        body: [
-          "Referral attribution: track install source via dynamic link (e.g. Branch.io).",
-          "'Active' = referred user has completed ≥ 1 survey in the last 30 days.",
-          "Bonus credited within 24h of the 10th active referral — show pending state.",
-        ],
-      },
-      {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Viral Growth",
-        body: [
-          "A ₹200 bonus at 10 referrals creates a meaningful incentive without making unit economics unsustainable.",
-          "Each referral-driven install has 2× LTV of organic installs.",
-        ],
-        metric: "↑ K-Factor · ↑ CAC Efficiency",
-      },
-    ],
-  },
-
-  {
-    screenId: 9,
-    label: "Empty State · All Caught Up",
-    description: "Zero states are product moments, not dead ends. Every empty state has a clear next action.",
-    left: [
-      {
-        type: "ux",
-        emoji: "📭",
-        title: "Empty State Design Principles",
-        body: [
-          "Icon reinforces the context (not a generic 'no data' illustration).",
-          "Message is positive and forward-looking — never 'No items found'.",
-          "Primary CTA drives users to the highest-value next action.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Empty State Trigger",
-        body: [
-          "Show only after confirmed empty API response — never on load.",
-          "Use skeleton screen during fetch to avoid false empty flashes.",
-          "CTA links directly to the relevant feature, not the home tab.",
-        ],
-      },
-    ],
-  },
-
-  {
-    screenId: 12,
-    label: "Loading Skeleton",
-    description: "Perceived performance is as important as actual performance. Skeleton screens set the right expectation.",
-    left: [
-      {
-        type: "ux",
-        emoji: "⚡",
-        title: "Skeleton Over Spinner",
-        body: [
-          "Skeleton screens feel 20% faster than spinners because they show structure immediately.",
-          "Users understand where content will appear — reduces perceived wait time.",
-          "Skeleton layout matches the real content layout exactly.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Skeleton Implementation",
-        body: [
-          "Minimum display: 300ms — avoid flash if API responds instantly.",
-          "Maximum display: 6s — then show error state with retry.",
-          "Animate shimmer pulse at 1.5s cycle to signal active loading.",
-        ],
-      },
-    ],
-  },
-
-  {
-    screenId: 13,
-    label: "Error · Network Failure",
-    description: "Errors are trust moments. Clear cause + clear recovery action prevents churn.",
-    left: [
-      {
-        type: "ux",
-        emoji: "⚠️",
-        title: "Error State Design",
-        body: [
-          "Error message explains WHAT happened and WHAT to do — not an error code.",
-          "Primary action: Retry. Secondary action: Go Home.",
-          "Tone is calm and helpful — never blames the user.",
-        ],
-      },
-    ],
-    right: [
-      {
-        type: "dev",
-        emoji: "💻",
-        title: "Retry Logic",
-        body: [
-          "Auto-retry once silently on network error before showing the error screen.",
-          "Exponential backoff: 1s → 2s → 4s.",
-          "Preserve in-progress state (survey progress, form data) across retries.",
-        ],
-      },
-      {
-        type: "product",
-        emoji: "📈",
-        title: "Hypothesis · Trust Recovery",
-        body: [
-          "Clear, actionable error screens with retry reduce churn at failure points by ~40%.",
-          "Users who successfully retry and recover have higher trust scores.",
-        ],
-        metric: "↓ Churn at Error · ↑ Recovery Rate",
-      },
-    ],
+    result: "Higher offer start rate.\nLower mid-offer abandonment.\nUsers know exactly what they are committing to before they tap.",
   },
 ]
 
-// ─── Phone shell constant ────────────────────────────────────────────────────
-const PHONE_W = 390
-const PHONE_H = 844
-const SCALE = 0.48
-const CW = Math.round(PHONE_W * SCALE)
-const CH = Math.round(PHONE_H * SCALE)
+// ─── Components ───────────────────────────────────────────────────────────────
 
-// ─── Components ──────────────────────────────────────────────────────────────
-function Tag({ type }: { type: NoteType }) {
-  const col = C[type]
+function FlowStep({ step }: { step: { label: string; text: string } }) {
   return (
-    <span style={{
-      display: "inline-block",
-      fontSize: 9,
-      fontWeight: 800,
-      letterSpacing: "0.08em",
-      textTransform: "uppercase",
-      color: col.tagColor,
-      background: col.tagBg,
-      border: `1px solid ${col.border}`,
-      borderRadius: 4,
-      padding: "2px 6px",
-      marginBottom: 8,
+    <div style={{
+      flex: 1,
+      background: "#0F172A",
+      border: "1px solid #1E293B",
+      borderRadius: 8,
+      padding: "20px 20px",
+      minWidth: 0,
     }}>
-      {col.label}
-    </span>
-  )
-}
-
-function Note({ a, side }: { a: Annotation; side: "left" | "right" }) {
-  const col = C[a.type]
-  return (
-    <div style={{ display: "flex", alignItems: "flex-start", gap: 0 }}>
-      {side === "right" && (
-        <div style={{ display: "flex", alignItems: "center", alignSelf: "center", flexShrink: 0, marginRight: -1 }}>
-          <div style={{ width: 24, height: 1, background: col.border }} />
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: col.border, flexShrink: 0 }} />
-        </div>
-      )}
       <div style={{
-        background: col.bg,
-        border: `1px solid ${col.border}`,
-        borderRadius: 10,
-        padding: "14px 16px",
-        width: 224,
-        flexShrink: 0,
-        boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+        fontSize: 9,
+        fontWeight: 700,
+        letterSpacing: "0.1em",
+        textTransform: "uppercase" as const,
+        color: "rgba(255,255,255,0.35)",
+        marginBottom: 10,
       }}>
-        <Tag type={a.type} />
-        <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A", marginBottom: 8, lineHeight: 1.3 }}>
-          {a.emoji} {a.title}
-        </div>
-        {a.body.map((line, i) => (
-          <p key={i} style={{
-            fontSize: 11,
-            color: "#475569",
-            lineHeight: 1.6,
-            margin: "0 0 4px",
-            fontWeight: 500,
-          }}>
-            {line}
-          </p>
-        ))}
-        {a.metric && (
-          <div style={{
-            marginTop: 10,
-            paddingTop: 8,
-            borderTop: `1px solid ${col.border}`,
-            fontSize: 10,
-            fontWeight: 800,
-            color: col.tagColor,
-            letterSpacing: "0.02em",
-          }}>
-            {a.metric}
-          </div>
-        )}
+        {step.label}
       </div>
-      {side === "left" && (
-        <div style={{ display: "flex", alignItems: "center", alignSelf: "center", flexShrink: 0, marginLeft: -1 }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: col.border, flexShrink: 0 }} />
-          <div style={{ width: 24, height: 1, background: col.border }} />
-        </div>
-      )}
+      <div style={{
+        fontSize: 12,
+        color: "rgba(255,255,255,0.85)",
+        lineHeight: 1.7,
+        whiteSpace: "pre-line" as const,
+        fontWeight: 400,
+      }}>
+        {step.text}
+      </div>
     </div>
   )
 }
 
-function Phone({ screenId }: { screenId: number }) {
+function MetricCard({ m }: { m: { label: string; today: string; goal: string } }) {
+  return (
+    <div style={{
+      flex: 1,
+      border: "1px solid #E5E7EB",
+      borderRadius: 8,
+      overflow: "hidden",
+    }}>
+      <div style={{
+        padding: "14px 20px",
+        borderBottom: "1px solid #E5E7EB",
+        fontSize: 11,
+        fontWeight: 600,
+        color: "#6B7280",
+      }}>
+        {m.label}
+      </div>
+      <div style={{ display: "flex" }}>
+        <div style={{ flex: 1, padding: "16px 20px", borderRight: "1px solid #E5E7EB" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#9CA3AF", marginBottom: 6 }}>
+            Today
+          </div>
+          <div style={{ fontSize: 20, fontWeight: 700, color: "#0F172A" }}>{m.today}</div>
+        </div>
+        <div style={{ flex: 1, padding: "16px 20px", background: "#0F172A" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)", marginBottom: 6 }}>
+            Goal
+          </div>
+          <div style={{ fontSize: 20, fontWeight: 700, color: "#FFFFFF" }}>{m.goal}</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function AnnotationCard({ card }: { card: Card }) {
+  if (card.light) {
+    return (
+      <div style={{
+        border: card.dashed ? "1px dashed #E5E7EB" : "1px solid #E5E7EB",
+        borderRadius: 8,
+        padding: "16px 20px",
+        background: "#FAFAFA",
+      }}>
+        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#9CA3AF", marginBottom: 8 }}>
+          {card.label}
+        </div>
+        <div style={{ fontSize: 12, color: "#6B7280", lineHeight: 1.7, fontWeight: 400 }}>
+          {card.text}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{
+      background: "#0F172A",
+      border: "1px solid #1E293B",
+      borderRadius: 8,
+      padding: "18px 22px",
+    }}>
+      <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: card.mono ? "rgba(134,239,172,0.7)" : "rgba(255,255,255,0.35)", marginBottom: 10 }}>
+        {card.label}
+      </div>
+      <div style={{
+        fontSize: 12,
+        color: "rgba(255,255,255,0.80)",
+        lineHeight: 1.75,
+        fontWeight: 400,
+        fontFamily: card.mono ? "'SF Mono', 'Fira Code', 'Cascadia Code', monospace" : "inherit",
+      }}>
+        {card.text}
+      </div>
+    </div>
+  )
+}
+
+function Arrow() {
+  return (
+    <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center", padding: "20px 0", gap: 0 }}>
+      <div style={{ width: 1, height: 40, background: "#E5E7EB" }} />
+      <svg width="8" height="6" viewBox="0 0 8 6" fill="none" style={{ marginTop: -1 }}>
+        <path d="M4 6L0 0h8L4 6z" fill="#D1D5DB" />
+      </svg>
+    </div>
+  )
+}
+
+function PhoneFrame({ screenId }: { screenId: number }) {
   return (
     <div style={{
       width: CW,
       height: CH,
       borderRadius: Math.round(52 * SCALE),
       background: "#000",
+      overflow: "hidden",
+      position: "relative" as const,
       flexShrink: 0,
       boxShadow: [
-        "0 0 0 1.5px #2C2C2E",
-        "0 0 0 6px #1C1C1E",
-        "0 0 0 7.5px #3A3A3C",
-        "0 24px 48px rgba(0,0,0,0.32)",
+        "0 0 0 1px #1C1C1E",
+        "0 0 0 6px #0A0A0A",
+        "0 0 0 7px #2C2C2E",
+        "0 32px 64px rgba(0,0,0,0.22)",
+        "0 8px 16px rgba(0,0,0,0.12)",
       ].join(", "),
-      overflow: "hidden",
-      position: "relative",
     }}>
-      <div style={{
-        width: PHONE_W,
-        height: PHONE_H,
-        transform: `scale(${SCALE})`,
-        transformOrigin: "top left",
-        overflow: "hidden",
-      }}>
+      <div style={{ width: PHONE_W, height: PHONE_H, transform: `scale(${SCALE})`, transformOrigin: "top left" }}>
         <iframe
           src={`/prototype?screen=${screenId}`}
           width={PHONE_W}
@@ -772,241 +446,173 @@ function Phone({ screenId }: { screenId: number }) {
   )
 }
 
-function Section({ s }: { s: ScreenSection }) {
-  const maxLeft = s.left.length
-  const maxRight = s.right.length
-  const maxRows = Math.max(maxLeft, maxRight)
+function ScreenSection({ s }: { s: ScreenData }) {
+  const pairCards: Card[] = []
+  const singleCards: Card[] = []
+
+  s.cards.forEach((c) => {
+    if (c.light || c.mono) singleCards.push(c)
+    else pairCards.push(c)
+  })
+
+  const paired: [Card, Card | undefined][] = []
+  for (let i = 0; i < pairCards.length; i += 2) {
+    paired.push([pairCards[i], pairCards[i + 1]])
+  }
 
   return (
-    <div style={{
-      paddingBottom: 80,
-      marginBottom: 80,
-      borderBottom: "1px solid #E2E8F0",
-    }}>
-      {/* Section header */}
-      <div style={{ marginBottom: 36, textAlign: "center" }}>
-        <h2 style={{
-          fontSize: 20,
-          fontWeight: 800,
-          color: "#0F172A",
-          letterSpacing: "-0.02em",
-          margin: "0 0 8px",
-          fontFamily: "system-ui, -apple-system, sans-serif",
-        }}>
-          {s.label}
+    <section style={{ marginBottom: 0, paddingBottom: 100 }}>
+      {/* Index + title */}
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontSize: 11, color: "#CBD5E1", fontWeight: 600, letterSpacing: "0.06em", marginBottom: 10 }}>
+          {String(s.index).padStart(2, "0")}
+        </div>
+        <h2 style={{ fontSize: 30, fontWeight: 700, color: "#0F172A", letterSpacing: "-0.025em", margin: "0 0 14px" }}>
+          {s.name}
         </h2>
-        <p style={{
-          fontSize: 13,
-          color: "#64748B",
-          fontWeight: 500,
-          margin: 0,
-          maxWidth: 540,
-          marginLeft: "auto",
-          marginRight: "auto",
-          lineHeight: 1.6,
-          fontFamily: "system-ui, -apple-system, sans-serif",
-        }}>
-          {s.description}
+        <p style={{ fontSize: 14, color: "#64748B", fontWeight: 400, maxWidth: CONTENT_W, margin: 0, lineHeight: 1.7 }}>
+          {s.goal}
         </p>
       </div>
 
-      {/* Three column layout */}
-      <div style={{
-        display: "flex",
-        alignItems: "flex-start",
-        justifyContent: "center",
-        gap: 0,
-      }}>
-        {/* Left notes */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-          alignItems: "flex-end",
-          width: 260,
-          flexShrink: 0,
-          paddingTop: Math.max(0, (CH - maxLeft * 110) / 2),
-        }}>
-          {s.left.map((a, i) => <Note key={i} a={a} side="left" />)}
+      {/* Vertical stack */}
+      <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center" }}>
+        {/* Problem */}
+        <div style={{ width: CONTENT_W }}>
+          <AnnotationCard card={{ label: "Problem", text: s.problem }} />
         </div>
 
-        {/* Vertical connector line left */}
-        <div style={{ width: 1, background: "#E2E8F0", alignSelf: "stretch", flexShrink: 0 }} />
+        <Arrow />
 
         {/* Phone */}
-        <div style={{ padding: "0 0", flexShrink: 0 }}>
-          <Phone screenId={s.screenId} />
+        <PhoneFrame screenId={s.screenId} />
+
+        <Arrow />
+
+        {/* Paired design cards */}
+        <div style={{ width: CONTENT_W, display: "flex", flexDirection: "column" as const, gap: 10 }}>
+          {paired.map(([a, b], i) => (
+            <div key={i} style={{ display: "grid", gridTemplateColumns: b ? "1fr 1fr" : "1fr", gap: 10 }}>
+              <AnnotationCard card={a} />
+              {b && <AnnotationCard card={b} />}
+            </div>
+          ))}
+          {singleCards.map((c, i) => (
+            <AnnotationCard key={i} card={c} />
+          ))}
         </div>
 
-        {/* Vertical connector line right */}
-        <div style={{ width: 1, background: "#E2E8F0", alignSelf: "stretch", flexShrink: 0 }} />
+        <Arrow />
 
-        {/* Right notes */}
+        {/* Expected result */}
         <div style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-          alignItems: "flex-start",
-          width: 260,
-          flexShrink: 0,
-          paddingTop: Math.max(0, (CH - maxRight * 110) / 2),
+          width: CONTENT_W,
+          border: "1px solid #E5E7EB",
+          borderRadius: 8,
+          padding: "20px 24px",
+          background: "#FAFAFA",
         }}>
-          {s.right.map((a, i) => <Note key={i} a={a} side="right" />)}
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#9CA3AF", marginBottom: 10 }}>
+            Expected Result
+          </div>
+          <div style={{ fontSize: 13, color: "#0F172A", lineHeight: 1.8, whiteSpace: "pre-line" as const, fontWeight: 400 }}>
+            {s.result}
+          </div>
         </div>
       </div>
 
-      {/* Bottom notes */}
-      {s.bottom && (
-        <div style={{
-          display: "flex",
-          gap: 16,
-          justifyContent: "center",
-          marginTop: 28,
-          flexWrap: "wrap",
-        }}>
-          {s.bottom.map((a, i) => (
-            <div key={i} style={{
-              background: C[a.type].bg,
-              border: `1px solid ${C[a.type].border}`,
-              borderRadius: 10,
-              padding: "14px 18px",
-              maxWidth: 320,
-              boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
-            }}>
-              <Tag type={a.type} />
-              <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A", marginBottom: 8 }}>
-                {a.emoji} {a.title}
-              </div>
-              {a.body.map((line, j) => (
-                <p key={j} style={{ fontSize: 11, color: "#475569", lineHeight: 1.6, margin: "0 0 4px", fontWeight: 500 }}>
-                  {line}
-                </p>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+      {/* Divider */}
+      <div style={{ width: "100%", height: 1, background: "#F1F5F9", marginTop: 100 }} />
+    </section>
   )
 }
 
-// ─── Legend ──────────────────────────────────────────────────────────────────
-function Legend() {
-  return (
-    <div style={{
-      display: "flex",
-      gap: 16,
-      justifyContent: "center",
-      marginBottom: 56,
-      flexWrap: "wrap",
-    }}>
-      {(Object.entries(C) as [NoteType, typeof C[NoteType]][]).map(([key, val]) => (
-        <div key={key} style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          background: val.bg,
-          border: `1px solid ${val.border}`,
-          borderRadius: 20,
-          padding: "6px 14px",
-        }}>
-          <div style={{ width: 8, height: 8, borderRadius: "50%", background: val.border }} />
-          <span style={{
-            fontSize: 11,
-            fontWeight: 700,
-            color: val.tagColor,
-            fontFamily: "system-ui, -apple-system, sans-serif",
-            letterSpacing: "0.04em",
-          }}>
-            {val.label}
-          </span>
-        </div>
-      ))}
-    </div>
-  )
-}
-
-// ─── Page ────────────────────────────────────────────────────────────────────
+// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function CaseStudyPage() {
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "#F8FAFC",
-      fontFamily: "system-ui, -apple-system, sans-serif",
-    }}>
-      {/* Page header */}
-      <div style={{
-        textAlign: "center",
-        padding: "64px 40px 48px",
-        borderBottom: "1px solid #E2E8F0",
-        background: "#fff",
-        marginBottom: 64,
-      }}>
-        <div style={{
-          fontSize: 11,
-          fontWeight: 800,
-          letterSpacing: "0.12em",
-          color: "#4F46E5",
-          textTransform: "uppercase",
-          marginBottom: 12,
-        }}>
-          Product Design Review · Internal
-        </div>
-        <h1 style={{
-          fontSize: 34,
-          fontWeight: 800,
-          color: "#0F172A",
-          letterSpacing: "-0.03em",
-          margin: "0 0 12px",
-        }}>
-          MoneyHi — Design Case Study
-        </h1>
-        <p style={{
-          fontSize: 14,
-          color: "#64748B",
-          fontWeight: 500,
-          maxWidth: 580,
-          margin: "0 auto 32px",
-          lineHeight: 1.7,
-        }}>
-          A full walkthrough of every design decision, UX rationale, expected business impact,
-          and developer specification for the MoneyHi rewards product.
-        </p>
+    <main className={inter.className} style={{ background: "#FFFFFF", minHeight: "100vh" }}>
 
-        {/* Meta row */}
-        <div style={{ display: "flex", gap: 32, justifyContent: "center", flexWrap: "wrap" }}>
+      {/* Page header */}
+      <header style={{ borderBottom: "1px solid #F1F5F9", padding: "80px 0 64px", textAlign: "center" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#94A3B8", marginBottom: 20 }}>
+          Product Case Study · Internal Review
+        </div>
+        <h1 style={{ fontSize: 42, fontWeight: 800, color: "#0F172A", letterSpacing: "-0.03em", margin: "0 0 16px" }}>
+          MoneyHi
+        </h1>
+        <p style={{ fontSize: 16, color: "#64748B", fontWeight: 400, maxWidth: 520, margin: "0 auto 40px", lineHeight: 1.7 }}>
+          A rewards app that helps users build a daily earning habit.
+          This document explains the design decisions behind each screen.
+        </p>
+        <div style={{ display: "flex", justifyContent: "center", gap: 48 }}>
           {[
-            { label: "Screens", value: `${SECTIONS.length} annotated` },
-            { label: "Audience", value: "PM · Engineering · Design" },
+            { label: "Screens", value: `${SCREENS.length}` },
+            { label: "Audience", value: "PM · Eng · Design" },
             { label: "Status", value: "Design Complete" },
-          ].map((item) => (
-            <div key={item.label} style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 18, fontWeight: 800, color: "#0F172A" }}>{item.value}</div>
-              <div style={{ fontSize: 11, color: "#94A3B8", fontWeight: 600, marginTop: 2 }}>{item.label}</div>
+          ].map((m) => (
+            <div key={m.label} style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: "#0F172A" }}>{m.value}</div>
+              <div style={{ fontSize: 11, color: "#94A3B8", fontWeight: 600, marginTop: 4, letterSpacing: "0.04em" }}>{m.label}</div>
             </div>
           ))}
         </div>
-      </div>
+      </header>
 
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px" }}>
-        {/* Legend */}
-        <div style={{ marginBottom: 56 }}>
-          <p style={{ textAlign: "center", fontSize: 12, color: "#94A3B8", fontWeight: 600, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-            Annotation Key
-          </p>
-          <Legend />
+      <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 40px" }}>
+
+        {/* Story flow */}
+        <section style={{ padding: "80px 0 72px", borderBottom: "1px solid #F1F5F9" }}>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#94A3B8", marginBottom: 10 }}>
+              The Problem We Are Solving
+            </div>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#0F172A", letterSpacing: "-0.02em", margin: 0 }}>
+              Why users stop returning after their first cashout
+            </h2>
+          </div>
+          <div style={{ display: "flex", alignItems: "stretch", gap: 4 }}>
+            {FLOW.map((step, i) => (
+              <React.Fragment key={i}>
+                <FlowStep step={step} />
+                {i < FLOW.length - 1 && (
+                  <div style={{ display: "flex", alignItems: "center", flexShrink: 0, padding: "0 2px" }}>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M1 6h10M7 2l4 4-4 4" stroke="#CBD5E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </section>
+
+        {/* Success metrics */}
+        <section style={{ padding: "72px 0", borderBottom: "1px solid #F1F5F9" }}>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#94A3B8", marginBottom: 10 }}>
+              Success Metrics
+            </div>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#0F172A", letterSpacing: "-0.02em", margin: 0 }}>
+              How we measure if it works
+            </h2>
+          </div>
+          <div style={{ display: "flex", gap: 12 }}>
+            {METRICS.map((m, i) => <MetricCard key={i} m={m} />)}
+          </div>
+        </section>
+
+        {/* Screen sections */}
+        <div style={{ paddingTop: 80 }}>
+          {SCREENS.map((s) => <ScreenSection key={s.screenId} s={s} />)}
         </div>
-
-        {/* All sections */}
-        {SECTIONS.map((s) => (
-          <Section key={s.screenId} s={s} />
-        ))}
 
         {/* Footer */}
-        <div style={{ textAlign: "center", padding: "40px 0 64px", color: "#94A3B8", fontSize: 12, fontWeight: 500 }}>
-          MoneyHi · Design System v1 · Prepared for internal product review
-        </div>
+        <footer style={{ textAlign: "center", padding: "40px 0 80px", borderTop: "1px solid #F1F5F9" }}>
+          <p style={{ fontSize: 12, color: "#CBD5E1", fontWeight: 500 }}>
+            MoneyHi · Product Design Review · Prepared for internal use
+          </p>
+        </footer>
       </div>
-    </div>
+    </main>
   )
 }
