@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Sora, Manrope } from "next/font/google"
 import {
@@ -3127,8 +3128,10 @@ function StatusBar() {
 }
 
 // --- Root Page Component ---
-export default function PrototypePage() {
-  const [screen, setScreen] = useState<Screen>(0)
+function PrototypePageInner() {
+  const searchParams = useSearchParams()
+  const initialScreen = Math.min(15, Math.max(0, Number(searchParams.get("screen") ?? 0))) as Screen
+  const [screen, setScreen] = useState<Screen>(initialScreen)
   const go = (s: Screen) => setScreen(s)
 
   return (
@@ -3419,5 +3422,13 @@ export default function PrototypePage() {
         ))}
       </div>
     </div>
+  )
+}
+
+export default function PrototypePage() {
+  return (
+    <Suspense fallback={null}>
+      <PrototypePageInner />
+    </Suspense>
   )
 }
